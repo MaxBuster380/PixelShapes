@@ -70,6 +70,45 @@ class SetShapeTest {
     }
 
     /**
+     * Checks if the iterator gives all and only the points included in the shape.
+     */
+    @Test
+    fun iteratorCheck() {
+        val NB_POINTS_REMOVED = RANDOM_CHECKS_COUNT / 2
+
+        val shape = SetShape()
+
+        // Add a bunch of points to the set
+        val points = mutableListOf<Pair<Int, Int>>()
+        for(i in 1..RANDOM_CHECKS_COUNT) {
+            val new = randomPoint()
+            shape.add(new)
+            points += new
+        }
+
+        // Remove at most NB_POINTS_REMOVED points
+        for(i in 1..NB_POINTS_REMOVED) {
+            val indexToExclude = abs(Random.nextInt()) % points.size
+
+            shape.remove(points[indexToExclude])
+            points.removeAt(indexToExclude)
+        }
+
+        /* For all points iterated on, check if they are :
+             1. Actually inside the shape
+             2. If the list of remaining points contains it
+           ... and removes the point from the list of remaining points.
+           At the end, check if that list is empty.
+        */
+        for(point in shape) {
+            assertTrue(shape.contains(point))
+            assertTrue(points.contains(point))
+            points.remove(point)
+        }
+        assertTrue(points.isEmpty())
+    }
+
+    /**
      * Returns a new instance of a point with arbitrary coordinates.
      */
     private fun randomPoint() : Pair<Int, Int> {
