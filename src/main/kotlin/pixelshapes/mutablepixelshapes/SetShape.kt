@@ -20,6 +20,4 @@ class SetShape : MutablePixelShape {
     override fun iterator(): Iterator<Pair<Int, Int>> {
         return points.iterator()
     }
-
-
 }
