@@ -1,5 +1,7 @@
 package pixelshapes.mutablepixelshapes
 
+import kotlin.math.floor
+
 /**
  * Implementation of MutablePixelShape using a grid.
  */
@@ -10,19 +12,27 @@ class GridShape(
 ) : MutablePixelShape {
 
     class GridShapeIterator(private val gridShape : GridShape) : Iterator<Pair<Int, Int>> {
-        private var currentIndex = 0
+        private var nextIndex = 0
+
+        init {
+            findNextIndex()
+        }
+
         override fun hasNext(): Boolean {
-            return currentIndex >= gridShape.width * gridShape.height
+            return !gridShape.indexOverLimit(nextIndex)
         }
 
         override fun next(): Pair<Int, Int> {
-            do {
-                currentIndex += 1
-            }while(!gridShape.table[currentIndex])
-
-            return gridShape.pointOf(currentIndex)
+            val resIndex = nextIndex
+            findNextIndex()
+            return gridShape.pointOf(resIndex)
         }
 
+        private fun findNextIndex() {
+            do {
+                nextIndex += 1
+            }while(!gridShape.indexOverLimit(nextIndex) && !gridShape.table[nextIndex])
+        }
     }
 
     private val table : MutableList<Boolean>
@@ -64,7 +74,10 @@ class GridShape(
      * Gives the same point relative to the origin point if the latter was (0, 0)
      */
     private fun relativeToOrigin(point : Pair<Int, Int>) : Pair<Int, Int> {
-        return Pair(point.first - origin.first, point.second - origin.second)
+        return Pair(
+            point.first - origin.first,
+            point.second - origin.second
+        )
     }
 
     /**
@@ -91,6 +104,16 @@ class GridShape(
      * @see indexOf
      */
     private fun pointOf(index : Int) : Pair<Int, Int> {
-        return Pair(index % width + origin.first, index / width + origin.second)
+        return Pair(
+            index % width + origin.first,
+            floor(index.toDouble() / width).toInt() + origin.second
+        )
+    }
+
+    /**
+     * Returns True only if the given index is greater than the maximum index.
+     */
+    private fun indexOverLimit(index : Int) : Boolean {
+        return index >= width * height
     }
 }

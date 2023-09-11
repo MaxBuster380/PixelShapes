@@ -92,6 +92,12 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>1.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
