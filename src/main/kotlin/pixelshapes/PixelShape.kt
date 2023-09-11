@@ -3,7 +3,7 @@ package pixelshapes
 /**
  * Set of integer coordinates.
  */
-interface PixelShape {
+interface PixelShape : Iterable<Pair<Int, Int>> {
     /**
      * Checks if the point is inside the shape.
      * @param point (X, Y) coordinates to check for.
