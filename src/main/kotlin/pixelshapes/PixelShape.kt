@@ -1,7 +1,7 @@
 package pixelshapes
 
 /**
- * Set of integer coordinates.
+ * Set of integer coordinates. Read-only.
  */
 interface PixelShape : Iterable<Pair<Int, Int>> {
     /**
