@@ -1,7 +1,7 @@
 # PixelShapes
 
 - I - Introduction
-- II Download
+- II - Download
 - III - About
 
 ### I - Introduction
