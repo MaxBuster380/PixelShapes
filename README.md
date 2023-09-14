@@ -25,7 +25,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    implementation 'com.github.MaxBuster380:PixelShapes:alpha-1.0.0'
+    implementation 'com.github.MaxBuster380:PixelShapes:alpha-1.1.0'
 }
 ```
 
@@ -45,7 +45,7 @@ In `pom.xml` :
 <dependency>
     <groupId>com.github.MaxBuster380</groupId>
     <artifactId>PixelShapes</artifactId>
-    <version>alpha-1.0.0</version>
+    <version>alpha-1.1.0</version>
 </dependency>
 ```
 
@@ -53,4 +53,4 @@ In `pom.xml` :
 
 By MaxBuster380
 
-[Github Repository](https://github.com/MaxBuster380/PixelShapes)
+[GitHub Repository](https://github.com/MaxBuster380/PixelShapes)
