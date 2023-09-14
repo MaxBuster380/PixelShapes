@@ -3,7 +3,7 @@ package pixelshapes.mutablepixelshapes
 /**
  * Implementation of MutablePixelShape using a set.
  */
-class SetShape : MutablePixelShape {
+class SetMutablePixelShape : MutablePixelShape {
     private var points = mutableListOf<Pair<Int, Int>>()
     override fun add(point: Pair<Int, Int>) {
         points.add(point)

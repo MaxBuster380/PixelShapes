@@ -5,13 +5,13 @@ import kotlin.math.floor
 /**
  * Implementation of MutablePixelShape using a grid.
  */
-class GridShape(
+class GridMutablePixelShape(
     private val origin : Pair<Int, Int>,
     private val width : Int,
     private val height : Int
 ) : MutablePixelShape {
 
-    class GridShapeIterator(private val gridShape : GridShape) : Iterator<Pair<Int, Int>> {
+    private class GridShapeIterator(private val gridMutablePixelShape : GridMutablePixelShape) : Iterator<Pair<Int, Int>> {
         private var nextIndex = 0
 
         init {
@@ -19,19 +19,19 @@ class GridShape(
         }
 
         override fun hasNext(): Boolean {
-            return !gridShape.indexOverLimit(nextIndex)
+            return !gridMutablePixelShape.indexOverLimit(nextIndex)
         }
 
         override fun next(): Pair<Int, Int> {
             val resIndex = nextIndex
             findNextIndex()
-            return gridShape.pointOf(resIndex)
+            return gridMutablePixelShape.pointOf(resIndex)
         }
 
         private fun findNextIndex() {
             do {
                 nextIndex += 1
-            }while(!gridShape.indexOverLimit(nextIndex) && !gridShape.table[nextIndex])
+            }while(!gridMutablePixelShape.indexOverLimit(nextIndex) && !gridMutablePixelShape.table[nextIndex])
         }
     }
 

@@ -4,10 +4,10 @@ import pixelshapes.MutablePixelShapeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class GridShapeTest {
+class SetMutablePixelShapeTest {
+
     companion object {
-        private const val GRID_WIDTH = 100
-        private const val GRID_HEIGHT = 75
+        private val LARGE_INTS = IntRange(Int.MIN_VALUE / 2, Int.MAX_VALUE / 2)
     }
 
     /**
@@ -16,9 +16,9 @@ class GridShapeTest {
     @Test
     fun containsKeepsAddedPoints() {
         assertTrue(MutablePixelShapeTest().containsKeepsAddedPoints(
-            GridShape(GRID_WIDTH, GRID_HEIGHT),
-            0..<GRID_WIDTH,
-            0..<GRID_HEIGHT
+            SetMutablePixelShape(),
+            LARGE_INTS,
+            LARGE_INTS
         ))
     }
 
@@ -28,9 +28,9 @@ class GridShapeTest {
     @Test
     fun containsExcludesRemovedPoints() {
         assertTrue(MutablePixelShapeTest().containsExcludesRemovedPoints(
-            GridShape(GRID_WIDTH, GRID_HEIGHT),
-            0..<GRID_WIDTH,
-            0..<GRID_HEIGHT
+            SetMutablePixelShape(),
+            LARGE_INTS,
+            LARGE_INTS
         ))
     }
 
@@ -40,9 +40,9 @@ class GridShapeTest {
     @Test
     fun iteratorCheck() {
         assertTrue(MutablePixelShapeTest().iteratorCheck(
-            GridShape(GRID_WIDTH, GRID_HEIGHT),
-            0..<GRID_WIDTH,
-            0..<GRID_HEIGHT
+            SetMutablePixelShape(),
+            LARGE_INTS,
+            LARGE_INTS
         ))
     }
 }
