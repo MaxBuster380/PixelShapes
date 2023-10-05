@@ -2,7 +2,8 @@
 
 - I - Introduction
 - II - Download
-- III - About
+- III - Use
+- IV - About
 
 ### I - Introduction
 
@@ -25,7 +26,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    implementation 'com.github.MaxBuster380:PixelShapes:alpha-1.1.0'
+    implementation 'com.github.MaxBuster380:PixelShapes:alpha-1.2.0'
 }
 ```
 
@@ -45,11 +46,45 @@ In `pom.xml` :
 <dependency>
     <groupId>com.github.MaxBuster380</groupId>
     <artifactId>PixelShapes</artifactId>
-    <version>alpha-1.1.0</version>
+    <version>alpha-1.2.0</version>
 </dependency>
 ```
 
-### III - About
+### III - Use
+
+A pixel shape is a set of 2-dimensional integer values.
+
+All pixel shapes implement the `PixelShape` interface :
+
+```kotlin
+interface PixelShape : Iterable<Pair<Int, Int>> {
+    fun contains(point: Pair<Int, Int>): Boolean
+    fun getBox(): BoxPixelShape
+}
+```
+
+A pixel shape is, by default, read-only. Read/write pixel shapes implement the `MutablePixelShape` interface :
+
+```kotlin
+interface MutablePixelShape : PixelShape {
+    // PixelShape methods
+    fun contains(point: Pair<Int, Int>): Boolean
+    fun getBox(): BoxPixelShape
+
+    fun add(point: Pair<Int, Int>)
+    fun add(shape: PixelShape)
+    fun remove(point: Pair<Int, Int>)
+    fun remove(shape: PixelShape)
+}
+```
+
+There are currently three implementations of `PixelShape`:
+
+- `SetMutablePixelShape`, stores coordinates using a standard Java Set.
+- `GridMutablePixelShape`, stores coordinates in a 2-dimensional grid.
+- `BoxPixelShape`, stores two ranges for X and Y each.
+
+### IV - About
 
 By MaxBuster380
 
