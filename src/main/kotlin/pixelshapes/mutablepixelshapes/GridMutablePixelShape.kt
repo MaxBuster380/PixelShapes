@@ -1,5 +1,6 @@
 package pixelshapes.mutablepixelshapes
 
+import pixelshapes.PixelShape
 import kotlin.math.floor
 
 /**
@@ -52,10 +53,22 @@ class GridMutablePixelShape(
         table[indexOf(point)] = true
     }
 
+    override fun add(shape: PixelShape) {
+        for (point in shape) {
+            add(point)
+        }
+    }
+
     override fun remove(point: Pair<Int, Int>) {
         if (!isPointInGrid(point)) { throw IndexOutOfBoundsException("$point is outside the grid's boundary.") }
 
         table[indexOf(point)] = false
+    }
+
+    override fun remove(shape: PixelShape) {
+        for (point in shape) {
+            remove(point)
+        }
     }
 
     override fun contains(point: Pair<Int, Int>): Boolean {
