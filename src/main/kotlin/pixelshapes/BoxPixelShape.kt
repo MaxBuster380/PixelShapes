@@ -29,7 +29,6 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
 
             return res
         }
-
     }
 
     init {
@@ -44,5 +43,9 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
         return BoxPixelShapeIterator(this)
+    }
+
+    override fun getBox(): BoxPixelShape {
+        return this
     }
 }
