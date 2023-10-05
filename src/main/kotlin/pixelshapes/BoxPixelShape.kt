@@ -48,4 +48,40 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
     override fun getBox(): BoxPixelShape {
         return this
     }
+
+    /**
+     * Gets the top-left-most point of the box shape.
+     *
+     * @return The bottom-right corner of the box shape.
+     */
+    fun getTopLeftPoint() : Pair<Int, Int> {
+        return topLeftPoint
+    }
+
+    /**
+     * Gets the bottom-right-most point of the box shape.
+     *
+     * @return The bottom-right corner of the box shape.
+     */
+    fun getBottomRightPoint() : Pair<Int, Int> {
+        return bottomRightPoint
+    }
+
+    /**
+     * Gets the width of the box.
+     *
+     * @return The X difference between the left-most point and the right-most point.
+     */
+    fun getWidth() : Int {
+        return bottomRightPoint.first - topLeftPoint.first
+    }
+
+    /**
+     * Gets the height of the box.
+     *
+     * @return The Y difference between the top-most point and the bottom-most point.
+     */
+    fun getHeight() : Int {
+        return bottomRightPoint.second - topLeftPoint.second
+    }
 }
