@@ -38,6 +38,8 @@ class GridMutablePixelShape(
 
     private val table : MutableList<Boolean>
 
+    private var size = 0
+
     constructor(width : Int, height : Int) : this(Pair(0, 0), width, height)
 
     init {
@@ -50,7 +52,10 @@ class GridMutablePixelShape(
     override fun add(point: Pair<Int, Int>) {
         if (!isPointInGrid(point)) { throw IndexOutOfBoundsException("$point is outside the grid's boundary.") }
 
-        table[indexOf(point)] = true
+        if (!table[indexOf(point)]) {
+            table[indexOf(point)] = true
+            size += 1
+        }
     }
 
     override fun add(shape: PixelShape) {
@@ -62,7 +67,10 @@ class GridMutablePixelShape(
     override fun remove(point: Pair<Int, Int>) {
         if (!isPointInGrid(point)) { throw IndexOutOfBoundsException("$point is outside the grid's boundary.") }
 
-        table[indexOf(point)] = false
+        if (table[indexOf(point)]) {
+            table[indexOf(point)] = false
+            size -= 1
+        }
     }
 
     override fun remove(shape: PixelShape) {
@@ -79,6 +87,10 @@ class GridMutablePixelShape(
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
         return GridShapeIterator(this)
+    }
+
+    override fun getSize(): Int {
+        return size
     }
 
     // PRIVATE INSTANCE METHODS

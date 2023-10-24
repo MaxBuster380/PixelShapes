@@ -49,6 +49,10 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
         return this
     }
 
+    override fun getSize(): Int {
+        return getWidth() * getHeight()
+    }
+
     /**
      * Gets the top-left-most point of the box shape.
      *

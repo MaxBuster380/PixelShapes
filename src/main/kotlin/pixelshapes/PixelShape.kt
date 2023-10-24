@@ -27,4 +27,11 @@ interface PixelShape : Iterable<Pair<Int, Int>> {
             point2 = Pair(maxX, maxY)
         )
     }
+
+    /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    fun getSize(): Int
 }
