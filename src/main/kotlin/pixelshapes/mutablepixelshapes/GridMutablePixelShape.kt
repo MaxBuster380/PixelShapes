@@ -28,6 +28,7 @@ import pixelshapes.PixelShape
 import kotlin.math.floor
 
 /**
+ * @Deprecated
  * Implementation of MutablePixelShape using a grid.
  */
 class GridMutablePixelShape(
