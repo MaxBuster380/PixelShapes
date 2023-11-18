@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import kotlin.math.abs
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -80,5 +81,21 @@ class BoxPixelShapeTest {
         assertEquals(area, nbPoints)
         assertEquals(area, shape.getSize())
         assertEquals(nbPoints, shape.getSize())
+    }
+
+    @Test
+    fun originConstructor() {
+        val x = Random.nextInt() % 1_000
+        val y = Random.nextInt() % 1_000
+        val origin = Pair(x, y)
+        val width = abs(Random.nextInt() % 2_000)
+        val height = abs(Random.nextInt() % 2_000)
+
+        val shape = BoxPixelShape(origin, width, height)
+
+        assertEquals(width * height, shape.getSize())
+        assertEquals(width, shape.getWidth())
+        assertEquals(height, shape.getHeight())
+        assertEquals(origin, shape.getTopLeftPoint())
     }
 }

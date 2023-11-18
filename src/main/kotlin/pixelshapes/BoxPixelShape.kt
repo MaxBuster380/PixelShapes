@@ -60,6 +60,10 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
         Pair(x - 1, y - 1)
     )
 
+    constructor(origin: Pair<Int, Int>, width: Int, height: Int) : this(
+        origin, Pair(origin.first + width - 1, origin.second + height - 1)
+    )
+
     init {
         topLeftPoint = Pair(min(point1.first, point2.first), min(point1.second, point2.second))
         bottomRightPoint = Pair(max(point1.first, point2.first), max(point1.second, point2.second))
