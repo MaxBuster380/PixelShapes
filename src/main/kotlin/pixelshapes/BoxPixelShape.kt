@@ -31,6 +31,11 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
         }
     }
 
+    constructor(x: Int, y: Int) : this(
+        Pair(0, 0),
+        Pair(x - 1, y - 1)
+    )
+
     init {
         topLeftPoint = Pair(min(point1.first, point2.first), min(point1.second, point2.second))
         bottomRightPoint = Pair(max(point1.first, point2.first), max(point1.second, point2.second))
@@ -77,7 +82,7 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
      * @return The X difference between the left-most point and the right-most point.
      */
     fun getWidth() : Int {
-        return bottomRightPoint.first - topLeftPoint.first
+        return bottomRightPoint.first - topLeftPoint.first + 1
     }
 
     /**
@@ -86,6 +91,6 @@ class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelSha
      * @return The Y difference between the top-most point and the bottom-most point.
      */
     fun getHeight() : Int {
-        return bottomRightPoint.second - topLeftPoint.second
+        return bottomRightPoint.second - topLeftPoint.second + 1
     }
 }

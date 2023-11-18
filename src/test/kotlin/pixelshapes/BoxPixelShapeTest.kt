@@ -2,6 +2,7 @@ package pixelshapes
 
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class BoxPixelShapeTest {
@@ -39,5 +40,21 @@ class BoxPixelShapeTest {
         }
 
         assertTrue(manualPointsInShape.isEmpty())
+    }
+
+    @Test
+    fun areaMatchesNbPointsIteratedMatchesSize() {
+        val shape = BoxPixelShape(41, 63)
+
+        val area = shape.getWidth() * shape.getHeight()
+
+        var nbPoints = 0
+        for (point in shape) {
+            nbPoints++
+        }
+
+        assertEquals(area, nbPoints)
+        assertEquals(area, shape.getSize())
+        assertEquals(nbPoints, shape.getSize())
     }
 }
