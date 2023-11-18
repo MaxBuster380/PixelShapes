@@ -29,8 +29,22 @@ import pixelshapes.PixelShape
 /**
  * Implementation of MutablePixelShape using a set.
  */
-class SetMutablePixelShape : MutablePixelShape {
-    private var points = mutableListOf<Pair<Int, Int>>()
+class SetMutablePixelShape(
+    private var points: MutableSet<Pair<Int, Int>>
+) : MutablePixelShape {
+
+    /**
+     * Creates an empty shape.
+     */
+    constructor() : this(mutableSetOf())
+
+    /**
+     * Creates a copy of the given shape.
+     */
+    constructor(other: PixelShape) : this() {
+        add(other)
+    }
+
     override fun add(point: Pair<Int, Int>) {
         points.add(point)
     }

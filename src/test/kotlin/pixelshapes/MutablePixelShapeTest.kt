@@ -121,7 +121,7 @@ class MutablePixelShapeTest {
                 points += new
             }
         }
-        println(points.size)
+
         // Remove at most NB_POINTS_REMOVED points
         for(i in 1..NB_POINTS_REMOVED) {
             val indexToExclude = abs(Random.nextInt()) % points.size

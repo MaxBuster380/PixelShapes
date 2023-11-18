@@ -24,8 +24,13 @@
 
 package pixelshapes.mutablepixelshapes
 
+import pixelshapes.BoxPixelShape
 import pixelshapes.MutablePixelShapeTest
+import pixelshapes.PixelShape
+import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class SetMutablePixelShapeTest {
@@ -68,5 +73,46 @@ class SetMutablePixelShapeTest {
             LARGE_INTS,
             LARGE_INTS
         ))
+    }
+
+    @Test
+    fun eachPointIteratedIsUnique() {
+
+        val shape = SetMutablePixelShape()
+        for (i in 1..1000) {
+            val newPoint = Pair(Random.nextInt(), Random.nextInt())
+            shape.add(newPoint)
+            if (Random.nextInt() % 2 == 0) {
+                shape.add(newPoint)
+            }
+        }
+
+        val iteratedPoints = mutableSetOf<Pair<Int, Int>>()
+        for (point in shape) {
+            assertFalse(iteratedPoints.contains(point))
+            iteratedPoints += point
+        }
+
+        assertEquals(iteratedPoints.size, shape.getSize())
+    }
+
+    @Test
+    fun checkCopyConstructor() {
+        val otherShape: PixelShape = BoxPixelShape(31, 97)
+
+        val setShape = SetMutablePixelShape(otherShape)
+
+        assertEquals(otherShape.getSize(), setShape.getSize())
+
+        for (boxPoint in otherShape) {
+            assertTrue { setShape.contains(boxPoint) }
+        }
+    }
+
+    @Test
+    fun emptyConstructor() {
+        val shape = SetMutablePixelShape()
+
+        assertTrue { shape.getSize() == 0 }
     }
 }
