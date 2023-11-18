@@ -24,13 +24,17 @@
 
 package pixelshapes
 
+import java.io.Serializable
 import kotlin.math.max
 import kotlin.math.min
 
 /**
  * Rectangular area between two points.
  */
-class BoxPixelShape(point1 : Pair<Int, Int>, point2 : Pair<Int, Int>) : PixelShape {
+class BoxPixelShape(
+    point1: Pair<Int, Int>,
+    point2: Pair<Int, Int>
+) : PixelShape, Serializable {
     private val topLeftPoint : Pair<Int, Int>
     private val bottomRightPoint : Pair<Int, Int>
 

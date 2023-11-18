@@ -25,13 +25,14 @@
 package pixelshapes.mutablepixelshapes
 
 import pixelshapes.PixelShape
+import java.io.Serializable
 
 /**
  * Implementation of MutablePixelShape using a set.
  */
 class SetMutablePixelShape(
     private var points: MutableSet<Pair<Int, Int>>
-) : MutablePixelShape {
+) : MutablePixelShape, Serializable {
 
     /**
      * Creates an empty shape.
