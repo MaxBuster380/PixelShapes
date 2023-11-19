@@ -36,6 +36,8 @@ class IntersectionPixelShape<T : PixelShape>(
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
 
+    constructor() : this(listOf())
+
     init {
         list = inputList.toMutableList()
         list.sortByDescending { it.getSize() }
