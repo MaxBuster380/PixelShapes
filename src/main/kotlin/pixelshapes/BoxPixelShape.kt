@@ -59,14 +59,49 @@ class BoxPixelShape(
         }
     }
 
-    constructor(x: Int, y: Int) : this(
+    /**
+     * Top left edge will have (0,0) coordinates.
+     * @param width Width of the box.
+     * @param height Height of the box.
+     */
+    constructor(width: Int, height: Int) : this(
         Pair(0, 0),
-        Pair(x - 1, y - 1)
+        Pair(width - 1, height - 1)
     )
 
-    constructor(origin: Pair<Int, Int>, width: Int, height: Int) : this(
-        origin, Pair(origin.first + width - 1, origin.second + height - 1)
+    /**
+     * @param topLeftPoint Coordinates of the top left edge.
+     * @param width Width of the box.
+     * @param height Height of the box.
+     */
+    constructor(topLeftPoint: Pair<Int, Int>, width: Int, height: Int) : this(
+        topLeftPoint, Pair(topLeftPoint.first + width - 1, topLeftPoint.second + height - 1)
     )
+
+    /**
+     * @param x X coordinate of the top left edge.
+     * @param y Y coordinate of the top left edge.
+     * @param width Width of the box.
+     * @param height Height of the box.
+     */
+    constructor(x: Int, y: Int, width: Int, height: Int) : this(
+        Pair(x, y), width, height
+    )
+
+    /**
+     * @param xRange Range of values for the X coordinate.
+     * @param yRange Range of values for the Y coordinate.
+     */
+    constructor(xRange: IntRange, yRange: IntRange) : this(
+        Pair(xRange.first, yRange.first), Pair(xRange.last, yRange.last)
+    ) {
+        if (xRange.step != 1) {
+            throw IllegalArgumentException("xRange should have a step of 1, found ${xRange.step}")
+        }
+        if (yRange.step != 1) {
+            throw IllegalArgumentException("yRange should have a step of 1, found ${yRange.step}")
+        }
+    }
 
     init {
         topLeftPoint = Pair(min(point1.first, point2.first), min(point1.second, point2.second))
