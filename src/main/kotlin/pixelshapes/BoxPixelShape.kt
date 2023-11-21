@@ -108,9 +108,9 @@ class BoxPixelShape(
         bottomRightPoint = Pair(max(point1.first, point2.first), max(point1.second, point2.second))
     }
 
-    override fun contains(point: Pair<Int, Int>): Boolean {
-        return point.first in topLeftPoint.first..bottomRightPoint.first &&
-                point.second in topLeftPoint.second..bottomRightPoint.second
+    override fun contains(element: Pair<Int, Int>): Boolean {
+        return element.first in topLeftPoint.first..bottomRightPoint.first &&
+                element.second in topLeftPoint.second..bottomRightPoint.second
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
@@ -123,6 +123,15 @@ class BoxPixelShape(
 
     override fun getSize(): Int {
         return getWidth() * getHeight()
+    }
+
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        for (point in elements) {
+            if (!contains(point)) {
+                return false
+            }
+        }
+        return true
     }
 
     /**

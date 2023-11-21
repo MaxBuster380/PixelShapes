@@ -31,7 +31,7 @@ import java.io.Serializable
  * Collection of Shapes where any of any current member Shape is considered "inside the Shape".
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
-open class UnionPixelShape<T : PixelShape>(
+class UnionPixelShape<T : PixelShape>(
     inputList: List<T>
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
@@ -48,9 +48,9 @@ open class UnionPixelShape<T : PixelShape>(
         list.sortByDescending { it.getSize() }
     }
 
-    override fun contains(point: Pair<Int, Int>): Boolean {
+    override fun contains(element: Pair<Int, Int>): Boolean {
         for (shape in list) {
-            if (shape.contains(point)) {
+            if (shape.contains(element)) {
                 return true
             }
         }
@@ -65,6 +65,12 @@ open class UnionPixelShape<T : PixelShape>(
         val points = compileToSet()
 
         return points.size
+    }
+
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        val points = compileToSet()
+
+        return points.containsAll(elements)
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {

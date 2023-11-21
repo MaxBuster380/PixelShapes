@@ -27,13 +27,16 @@ package pixelshapes
 /**
  * Set of integer coordinates. Read-only.
  */
-interface PixelShape : Iterable<Pair<Int, Int>> {
+interface PixelShape : Set<Pair<Int, Int>> {
+    override val size: Int
+        get() = getSize()
+
     /**
      * Checks if the point is inside the shape.
-     * @param point (X, Y) coordinates to check for.
+     * @param element (X, Y) coordinates to check for.
      * @return True only if a given coordinate is a part of the shape.
      */
-    fun contains(point : Pair<Int, Int>) : Boolean
+    override fun contains(element: Pair<Int, Int>): Boolean
 
     /**
      * Gets the rectangular convex hull of the shape, meaning the smallest rectangle that contains all its points.
@@ -62,4 +65,8 @@ interface PixelShape : Iterable<Pair<Int, Int>> {
      * @return The number of unique coordinates in the shape.
      */
     fun getSize(): Int
+
+    override fun isEmpty(): Boolean {
+        return getSize() == 0
+    }
 }

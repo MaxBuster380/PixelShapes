@@ -29,12 +29,13 @@ import pixelshapes.PixelShape
 /**
  * Set of integer coordinates. Can be modified.
  */
-interface MutablePixelShape : PixelShape {
+interface MutablePixelShape : PixelShape, MutableSet<Pair<Int, Int>> {
     /**
-     * Adds a point to the shape.
-     * @param point (X, Y) coordinate to include in the shape.
+     * Adds a point to the Shape.
+     * @param element (X, Y) coordinate to include in the Shape.
+     * @return false only if the point was already included in the Shape.
      */
-    fun add(point : Pair<Int, Int>)
+    override fun add(element: Pair<Int, Int>): Boolean
 
     /**
      * Adds all the points in a shape.
@@ -43,10 +44,11 @@ interface MutablePixelShape : PixelShape {
     fun add(shape: PixelShape)
 
     /**
-     * Removes a point from the shape.
-     * @param point (X, Y) coordinate to exclude from the shape.
+     * Removes a point from the Shape.
+     * @param element (X, Y) coordinate to exclude from the Shape.
+     * @return false only if the point was already excluded from the Shape.
      */
-    fun remove(point : Pair<Int, Int>)
+    override fun remove(element: Pair<Int, Int>): Boolean
 
     /**
      * Removes all the points in a shape from the current shape.

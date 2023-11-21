@@ -30,9 +30,11 @@ import java.io.Serializable
  * Shape with no coordinates.
  */
 class EmptyPixelShape : PixelShape, Serializable {
-    override fun contains(point: Pair<Int, Int>): Boolean = false
+    override fun contains(element: Pair<Int, Int>): Boolean = false
 
     override fun getSize(): Int = 0
+
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean = false
 
     override fun iterator(): Iterator<Pair<Int, Int>> = listOf<Pair<Int, Int>>().iterator()
 }

@@ -48,9 +48,9 @@ class IntersectionPixelShape<T : PixelShape>(
         list.sortByDescending { it.getSize() }
     }
 
-    override fun contains(point: Pair<Int, Int>): Boolean {
+    override fun contains(element: Pair<Int, Int>): Boolean {
         for (shape in list) {
-            if (!shape.contains(point)) {
+            if (!shape.contains(element)) {
                 return false
             }
         }
@@ -69,6 +69,12 @@ class IntersectionPixelShape<T : PixelShape>(
         val points = compileSet()
 
         return points.size
+    }
+
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        val points = compileSet()
+
+        return points.containsAll(elements)
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
