@@ -36,6 +36,9 @@ class UnionPixelShape<T : PixelShape>(
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
 
+    /**
+     * Creates an instance with no shapes attached.
+     */
     constructor() : this(listOf())
 
     init {
