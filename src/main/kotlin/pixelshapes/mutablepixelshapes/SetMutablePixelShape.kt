@@ -31,8 +31,9 @@ import java.io.Serializable
  * Implementation of MutablePixelShape using a set.
  */
 class SetMutablePixelShape(
-    private var points: MutableSet<Pair<Int, Int>>
+    inputCollection: Collection<Pair<Int, Int>>
 ) : MutablePixelShape, Serializable {
+    private var points: MutableSet<Pair<Int, Int>>
 
     /**
      * Creates an empty shape.
@@ -44,6 +45,10 @@ class SetMutablePixelShape(
      */
     constructor(other: PixelShape) : this() {
         add(other)
+    }
+
+    init {
+        points = inputCollection.toMutableSet()
     }
 
     override fun add(element: Pair<Int, Int>): Boolean {
