@@ -32,14 +32,14 @@ import java.io.Serializable
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
 class IntersectionPixelShape<T : PixelShape>(
-    inputList: Collection<T>
+    inputCollection: Collection<T>
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
 
     constructor() : this(listOf())
 
     init {
-        list = inputList.toMutableList()
+        list = inputCollection.toMutableList()
         list.sortByDescending { it.getSize() }
     }
 
