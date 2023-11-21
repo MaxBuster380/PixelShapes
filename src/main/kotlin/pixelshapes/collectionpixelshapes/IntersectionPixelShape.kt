@@ -32,7 +32,7 @@ import java.io.Serializable
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
 class IntersectionPixelShape<T : PixelShape>(
-    inputList: List<T>
+    inputList: Collection<T>
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
 
