@@ -113,18 +113,6 @@ class BoxPixelShape(
                 element.second in topLeftPoint.second..bottomRightPoint.second
     }
 
-    override fun iterator(): Iterator<Pair<Int, Int>> {
-        return BoxPixelShapeIterator(this)
-    }
-
-    override fun getBox(): BoxPixelShape {
-        return this
-    }
-
-    override fun getSize_(): Int {
-        return getWidth() * getHeight()
-    }
-
     override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
         for (point in elements) {
             if (!contains(point)) {
@@ -134,13 +122,8 @@ class BoxPixelShape(
         return true
     }
 
-    /**
-     * Gets the top-left-most point of the box shape.
-     *
-     * @return The bottom-right corner of the box shape.
-     */
-    fun getTopLeftPoint() : Pair<Int, Int> {
-        return topLeftPoint
+    override fun getBox(): BoxPixelShape {
+        return this
     }
 
     /**
@@ -153,20 +136,37 @@ class BoxPixelShape(
     }
 
     /**
-     * Gets the width of the box.
-     *
-     * @return The X difference between the left-most point and the right-most point.
-     */
-    fun getWidth() : Int {
-        return bottomRightPoint.first - topLeftPoint.first + 1
-    }
-
-    /**
      * Gets the height of the box.
      *
      * @return The Y difference between the top-most point and the bottom-most point.
      */
     fun getHeight() : Int {
         return bottomRightPoint.second - topLeftPoint.second + 1
+    }
+
+    override fun getSize_(): Int {
+        return getWidth() * getHeight()
+    }
+
+    /**
+     * Gets the top-left-most point of the box shape.
+     *
+     * @return The bottom-right corner of the box shape.
+     */
+    fun getTopLeftPoint(): Pair<Int, Int> {
+        return topLeftPoint
+    }
+
+    /**
+     * Gets the width of the box.
+     *
+     * @return The X difference between the left-most point and the right-most point.
+     */
+    fun getWidth(): Int {
+        return bottomRightPoint.first - topLeftPoint.first + 1
+    }
+
+    override fun iterator(): Iterator<Pair<Int, Int>> {
+        return BoxPixelShapeIterator(this)
     }
 }

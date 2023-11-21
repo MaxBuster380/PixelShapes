@@ -57,6 +57,12 @@ class UnionPixelShape<T : PixelShape>(
         return false
     }
 
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        val points = compileToSet()
+
+        return points.containsAll(elements)
+    }
+
     override fun getAllShapes(): Set<T> {
         return list.toSet()
     }
@@ -65,12 +71,6 @@ class UnionPixelShape<T : PixelShape>(
         val points = compileToSet()
 
         return points.size
-    }
-
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
-        val points = compileToSet()
-
-        return points.containsAll(elements)
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {

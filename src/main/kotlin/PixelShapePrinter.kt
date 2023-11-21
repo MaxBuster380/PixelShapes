@@ -35,7 +35,7 @@ class PixelShapePrinter {
      * @param yRange Range of Y coordinates to display.
      * @return A string showcasing the Shape.
      */
-    fun string(shape: PixelShape, xRange: IntRange, yRange: IntRange): String {
+    fun write(shape: PixelShape, xRange: IntRange, yRange: IntRange): String {
         var res = ""
 
         for (y in yRange) {

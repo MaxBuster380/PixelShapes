@@ -61,6 +61,30 @@ class SetMutablePixelShape(
         }
     }
 
+    override fun addAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        return points.addAll(elements)
+    }
+
+    override fun clear() {
+        points = mutableSetOf()
+    }
+
+    override fun contains(element: Pair<Int, Int>): Boolean {
+        return element in points
+    }
+
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        return points.containsAll(elements)
+    }
+
+    override fun getSize_(): Int {
+        return points.size
+    }
+
+    override fun iterator(): MutableIterator<Pair<Int, Int>> {
+        return points.iterator()
+    }
+
     override fun remove(element: Pair<Int, Int>): Boolean {
         return points.remove(element)
     }
@@ -71,35 +95,11 @@ class SetMutablePixelShape(
         }
     }
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
-        return element in points
-    }
-
-    override fun iterator(): MutableIterator<Pair<Int, Int>> {
-        return points.iterator()
-    }
-
-    override fun addAll(elements: Collection<Pair<Int, Int>>): Boolean {
-        return points.addAll(elements)
-    }
-
-    override fun clear() {
-        points = mutableSetOf()
-    }
-
     override fun removeAll(elements: Collection<Pair<Int, Int>>): Boolean {
         return points.removeAll(elements.toSet())
     }
 
     override fun retainAll(elements: Collection<Pair<Int, Int>>): Boolean {
         return points.retainAll(elements.toSet())
-    }
-
-    override fun getSize_(): Int {
-        return points.size
-    }
-
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
-        return points.containsAll(elements)
     }
 }

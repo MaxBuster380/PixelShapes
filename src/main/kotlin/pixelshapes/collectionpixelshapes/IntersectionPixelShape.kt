@@ -57,6 +57,12 @@ class IntersectionPixelShape<T : PixelShape>(
         return true
     }
 
+    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+        val points = compileSet()
+
+        return points.containsAll(elements)
+    }
+
     override fun getAllShapes(): Set<T> {
         return list.toSet()
     }
@@ -69,12 +75,6 @@ class IntersectionPixelShape<T : PixelShape>(
         val points = compileSet()
 
         return points.size
-    }
-
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
-        val points = compileSet()
-
-        return points.containsAll(elements)
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
