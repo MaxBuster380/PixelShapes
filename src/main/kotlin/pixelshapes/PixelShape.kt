@@ -41,6 +41,10 @@ interface PixelShape : Iterable<Pair<Int, Int>> {
      * @return The smallest BoxPixelShape that contains all the points in the shape.
      */
     fun getBox() : BoxPixelShape {
+        if (getSize() == 0) {
+            return BoxPixelShape(IntRange.EMPTY, IntRange.EMPTY)
+        }
+
         val minX = this.minBy { it.first }.first
         val minY = this.minBy { it.second }.second
         val maxX = this.maxBy { it.first }.first
