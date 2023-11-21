@@ -40,12 +40,12 @@ class UnionPixelShape<T : PixelShape>(
 
     init {
         list = inputCollection.toMutableList()
-        list.sortByDescending { it.getSize() }
+        list.sortByDescending { it.getSize_() }
     }
 
     override fun add(shape: T) {
         list += shape
-        list.sortByDescending { it.getSize() }
+        list.sortByDescending { it.getSize_() }
     }
 
     override fun contains(element: Pair<Int, Int>): Boolean {
@@ -61,7 +61,7 @@ class UnionPixelShape<T : PixelShape>(
         return list.toSet()
     }
 
-    override fun getSize(): Int {
+    override fun getSize_(): Int {
         val points = compileToSet()
 
         return points.size

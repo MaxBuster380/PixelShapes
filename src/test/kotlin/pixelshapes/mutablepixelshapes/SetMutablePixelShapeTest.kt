@@ -93,7 +93,7 @@ class SetMutablePixelShapeTest {
             iteratedPoints += point
         }
 
-        assertEquals(iteratedPoints.size, shape.getSize())
+        assertEquals(iteratedPoints.size, shape.getSize_())
     }
 
     @Test
@@ -102,7 +102,7 @@ class SetMutablePixelShapeTest {
 
         val setShape = SetMutablePixelShape(otherShape)
 
-        assertEquals(otherShape.getSize(), setShape.getSize())
+        assertEquals(otherShape.getSize_(), setShape.getSize_())
 
         for (boxPoint in otherShape) {
             assertTrue { setShape.contains(boxPoint) }
@@ -113,6 +113,6 @@ class SetMutablePixelShapeTest {
     fun emptyConstructor() {
         val shape = SetMutablePixelShape()
 
-        assertTrue { shape.getSize() == 0 }
+        assertTrue { shape.getSize_() == 0 }
     }
 }

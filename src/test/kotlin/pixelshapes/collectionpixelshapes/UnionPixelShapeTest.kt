@@ -65,6 +65,6 @@ class UnionPixelShapeTest {
             points += point
         }
 
-        assertEquals(points.size, shape.getSize())
+        assertEquals(points.size, shape.getSize_())
     }
 }

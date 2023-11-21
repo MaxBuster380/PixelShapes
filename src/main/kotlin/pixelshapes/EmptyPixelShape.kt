@@ -32,7 +32,7 @@ import java.io.Serializable
 class EmptyPixelShape : PixelShape, Serializable {
     override fun contains(element: Pair<Int, Int>): Boolean = false
 
-    override fun getSize(): Int = 0
+    override fun getSize_(): Int = 0
 
     override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean = false
 

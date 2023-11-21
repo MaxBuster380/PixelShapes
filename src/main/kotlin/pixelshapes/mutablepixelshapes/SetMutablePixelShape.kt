@@ -95,7 +95,7 @@ class SetMutablePixelShape(
         return points.retainAll(elements.toSet())
     }
 
-    override fun getSize(): Int {
+    override fun getSize_(): Int {
         return points.size
     }
 

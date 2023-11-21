@@ -121,7 +121,7 @@ class BoxPixelShape(
         return this
     }
 
-    override fun getSize(): Int {
+    override fun getSize_(): Int {
         return getWidth() * getHeight()
     }
 
