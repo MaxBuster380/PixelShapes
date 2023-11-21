@@ -68,6 +68,11 @@ interface PixelShape : Set<Pair<Int, Int>> {
      */
     fun getSize_(): Int
 
+    /**
+     * Checks if the Shape is empty.
+     *
+     * @return true only if the Shape has exactly 0 unique coordinates.
+     */
     override fun isEmpty(): Boolean {
         return getSize_() == 0
     }
