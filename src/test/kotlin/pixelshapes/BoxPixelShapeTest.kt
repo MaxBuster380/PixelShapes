@@ -79,8 +79,8 @@ class BoxPixelShapeTest {
         }
 
         assertEquals(area, nbPoints)
-        assertEquals(area, shape.getSize_())
-        assertEquals(nbPoints, shape.getSize_())
+        assertEquals(area, shape.size)
+        assertEquals(nbPoints, shape.size)
     }
 
     @Test
@@ -93,7 +93,7 @@ class BoxPixelShapeTest {
 
         val shape = BoxPixelShape(origin, width, height)
 
-        assertEquals(width * height, shape.getSize_())
+        assertEquals(width * height, shape.size)
         assertEquals(width, shape.getWidth())
         assertEquals(height, shape.getHeight())
         assertEquals(origin, shape.getTopLeftPoint())
@@ -103,6 +103,6 @@ class BoxPixelShapeTest {
     fun sizeMemberMatchesGetSizeMethod() {
         val shape = BoxPixelShape(14, 5)
 
-        assertEquals(shape.getSize_(), shape.size)
+        assertEquals(shape.size, shape.size)
     }
 }

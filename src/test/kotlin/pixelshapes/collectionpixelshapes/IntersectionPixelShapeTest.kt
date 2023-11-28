@@ -66,6 +66,6 @@ class IntersectionPixelShapeTest {
             points += point
         }
 
-        assertEquals(points.size, shape.getSize_())
+        assertEquals(points.size, shape.size)
     }
 }

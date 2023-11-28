@@ -30,11 +30,17 @@ import java.io.Serializable
  * Shape with no coordinates.
  */
 class EmptyPixelShape : PixelShape, Serializable {
+    /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    override val size: Int
+        get() = 0
+
     override fun contains(element: Pair<Int, Int>): Boolean = false
 
     override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean = false
-
-    override fun getSize_(): Int = 0
 
     override fun iterator(): Iterator<Pair<Int, Int>> = listOf<Pair<Int, Int>>().iterator()
 }

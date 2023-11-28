@@ -28,8 +28,6 @@ package pixelshapes
  * Set of integer coordinates. Read-only.
  */
 interface PixelShape : Set<Pair<Int, Int>> {
-    override val size: Int
-        get() = getSize_()
 
     /**
      * Checks if the point is inside the shape.
@@ -44,7 +42,7 @@ interface PixelShape : Set<Pair<Int, Int>> {
      * @return The smallest BoxPixelShape that contains all the points in the shape.
      */
     fun getBox() : BoxPixelShape {
-        if (getSize_() == 0) {
+        if (size == 0) {
             return BoxPixelShape(IntRange.EMPTY, IntRange.EMPTY)
         }
 
@@ -60,20 +58,11 @@ interface PixelShape : Set<Pair<Int, Int>> {
     }
 
     /**
-     * Returns the size of the shape, in unique coordinates.
-     * Prefer to use the size member attribute.
-     *
-     * @return The number of unique coordinates in the shape.
-     * @see size
-     */
-    fun getSize_(): Int
-
-    /**
      * Checks if the Shape is empty.
      *
      * @return true only if the Shape has exactly 0 unique coordinates.
      */
     override fun isEmpty(): Boolean {
-        return getSize_() == 0
+        return size == 0
     }
 }

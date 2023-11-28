@@ -32,9 +32,17 @@ import java.io.Serializable
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
 class UnionPixelShape<T : PixelShape>(
-    inputCollection: Collection<T>
+    collection: Collection<T>
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
+
+    /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    override val size: Int
+        get() = calculateSize()
 
     /**
      * Creates an instance with no shapes attached.
@@ -42,13 +50,13 @@ class UnionPixelShape<T : PixelShape>(
     constructor() : this(listOf())
 
     init {
-        list = inputCollection.toMutableList()
-        list.sortByDescending { it.getSize_() }
+        list = collection.toMutableList()
+        list.sortByDescending { it.size }
     }
 
     override fun add(shape: T) {
         list += shape
-        list.sortByDescending { it.getSize_() }
+        list.sortByDescending { it.size }
     }
 
     override fun contains(element: Pair<Int, Int>): Boolean {
@@ -70,12 +78,6 @@ class UnionPixelShape<T : PixelShape>(
         return list.toSet()
     }
 
-    override fun getSize_(): Int {
-        val points = compileToSet()
-
-        return points.size
-    }
-
     override fun iterator(): Iterator<Pair<Int, Int>> {
         val points = compileToSet()
 
@@ -94,6 +96,12 @@ class UnionPixelShape<T : PixelShape>(
             }
         }
         return res
+    }
+
+    private fun calculateSize(): Int {
+        val points = compileToSet()
+
+        return points.size
     }
 
 }

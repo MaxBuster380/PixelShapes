@@ -36,6 +36,14 @@ class SetMutablePixelShape(
     private var points: MutableSet<Pair<Int, Int>>
 
     /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    override val size: Int
+        get() = points.size
+
+    /**
      * Creates an empty shape.
      */
     constructor() : this(mutableSetOf())
@@ -75,10 +83,6 @@ class SetMutablePixelShape(
 
     override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
         return points.containsAll(elements)
-    }
-
-    override fun getSize_(): Int {
-        return points.size
     }
 
     override fun iterator(): MutableIterator<Pair<Int, Int>> {

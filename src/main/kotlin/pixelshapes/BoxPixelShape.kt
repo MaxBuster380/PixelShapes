@@ -38,6 +38,14 @@ class BoxPixelShape(
     private val topLeftPoint : Pair<Int, Int>
     private val bottomRightPoint : Pair<Int, Int>
 
+    /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    override val size: Int
+        get() = getWidth() * getHeight()
+
     private class BoxPixelShapeIterator(private val shape : BoxPixelShape) : Iterator<Pair<Int, Int>> {
         private var currentX = shape.topLeftPoint.first
         private var currentY = shape.topLeftPoint.second
@@ -142,10 +150,6 @@ class BoxPixelShape(
      */
     fun getHeight() : Int {
         return bottomRightPoint.second - topLeftPoint.second + 1
-    }
-
-    override fun getSize_(): Int {
-        return getWidth() * getHeight()
     }
 
     /**

@@ -32,9 +32,17 @@ import java.io.Serializable
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
 class IntersectionPixelShape<T : PixelShape>(
-    inputCollection: Collection<T>
+    collection: Collection<T>
 ) : CollectionPixelShape<T>, Serializable {
     private val list: MutableList<T>
+
+    /**
+     * Returns the size of the shape, in unique coordinates.
+     *
+     * @return The number of unique coordinates in the shape.
+     */
+    override val size: Int
+        get() = calculateSize()
 
     /**
      * Creates an instance with no shapes attached.
@@ -42,13 +50,13 @@ class IntersectionPixelShape<T : PixelShape>(
     constructor() : this(listOf())
 
     init {
-        list = inputCollection.toMutableList()
-        list.sortByDescending { it.getSize_() }
+        list = collection.toMutableList()
+        list.sortByDescending { it.size }
     }
 
     override fun add(shape: T) {
         list += shape
-        list.sortByDescending { it.getSize_() }
+        list.sortByDescending { it.size }
     }
 
     override fun contains(element: Pair<Int, Int>): Boolean {
@@ -68,16 +76,6 @@ class IntersectionPixelShape<T : PixelShape>(
 
     override fun getAllShapes(): Set<T> {
         return list.toSet()
-    }
-
-    override fun getSize_(): Int {
-        if (list.isEmpty()) {
-            return 0
-        }
-
-        val points = compileSet()
-
-        return points.size
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
@@ -104,4 +102,15 @@ class IntersectionPixelShape<T : PixelShape>(
         }
         return res
     }
+
+    private fun calculateSize(): Int {
+        if (list.isEmpty()) {
+            return 0
+        }
+
+        val points = compileSet()
+
+        return points.size
+    }
+
 }
