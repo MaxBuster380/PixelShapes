@@ -135,9 +135,9 @@ class BoxPixelShape(
     }
 
     /**
-     * Gets the bottom-right-most point of the box shape.
+     * Gets the bottom-right-most point of the Shape.
      *
-     * @return The bottom-right corner of the box shape.
+     * @return The bottom-right corner of the Shape.
      */
     fun getBottomRightPoint() : Pair<Int, Int> {
         return bottomRightPoint
@@ -153,9 +153,9 @@ class BoxPixelShape(
     }
 
     /**
-     * Gets the top-left-most point of the box shape.
+     * Gets the top-left-most point of the Shape.
      *
-     * @return The bottom-right corner of the box shape.
+     * @return The top-left corner of the Shape.
      */
     fun getTopLeftPoint(): Pair<Int, Int> {
         return topLeftPoint
@@ -168,6 +168,24 @@ class BoxPixelShape(
      */
     fun getWidth(): Int {
         return bottomRightPoint.first - topLeftPoint.first + 1
+    }
+
+    /**
+     * Gets the range of X values.
+     *
+     * @return The range of X values of the Shape.
+     */
+    fun getXRange(): IntRange {
+        return topLeftPoint.first..bottomRightPoint.first
+    }
+
+    /**
+     * Gets the range of Y values.
+     *
+     * @return The range of Y values of the Shape.
+     */
+    fun getYRange(): IntRange {
+        return topLeftPoint.second..bottomRightPoint.second
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
