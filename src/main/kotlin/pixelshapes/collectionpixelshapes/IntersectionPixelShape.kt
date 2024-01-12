@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,9 @@ import pixelshapes.PixelShape
 import java.io.Serializable
 
 /**
- * Collection of Shapes where only the shared coordinates of all current member Shapes are considered "inside the Shape".
+ * # IntersectionPixelShape
+ *
+ * An IntersectionPixelShape is a collection of Shapes where only the shared coordinates of all current member Shapes are considered "inside the Shape".
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
 class IntersectionPixelShape<T : PixelShape>(
@@ -37,9 +39,7 @@ class IntersectionPixelShape<T : PixelShape>(
     private val list: MutableList<T>
 
     /**
-     * Returns the size of the shape, in unique coordinates.
-     *
-     * @return The number of unique coordinates in the shape.
+     * The size is the number of unique coordinates in the Shape.
      */
     override val size: Int
         get() = calculateSize()

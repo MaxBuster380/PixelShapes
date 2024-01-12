@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,9 @@ package pixelshapes.collectionpixelshapes
 import pixelshapes.PixelShape
 
 /**
- * Collections of PixelShapes are Shapes used for quick and efficient grouping of existing Shapes.
+ * # CollectionPixelShape
+ *
+ * A CollectionPixelShape is a collection of PixelShapes are Shapes used for quick and efficient grouping of existing Shapes.
  * While not editable per coordinate, like MutablePixelShapes, they can add and remove instances of shapes post-creation.
  * @param T The collection's type can be specified. Use "PixelShape" for any.
  */
