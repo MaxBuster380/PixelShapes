@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,9 @@ package pixelshapes.mutablepixelshapes
 import pixelshapes.PixelShape
 
 /**
- * Set of integer coordinates. Can be modified.
+ * # MutablePixelShape
+ *
+ * A MutablePixelShape is a PixelShape that can be modified at run-time.
  */
 interface MutablePixelShape : PixelShape, MutableSet<Pair<Int, Int>> {
     /**
