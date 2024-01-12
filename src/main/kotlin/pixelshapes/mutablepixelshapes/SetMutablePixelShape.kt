@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,20 +28,26 @@ import pixelshapes.PixelShape
 import java.io.Serializable
 
 /**
- * Implementation of MutablePixelShape using a set.
+ * # SetMutablePixelShape
+ *
+ * A SetMutablePixelShape is a PixelShape that can be modified at run-time.
+ *
+ * @constructor Uses the given set as reference. Does not copy with a different instance.
+
+ * @param points If given a MutableSet, it will use this instance to operate.
  */
 class SetMutablePixelShape(
-    inputCollection: Collection<Pair<Int, Int>>
+    private val points: MutableSet<Pair<Int, Int>>
 ) : MutablePixelShape, Serializable {
-    private var points: MutableSet<Pair<Int, Int>>
+
+    /////////////////////////////////////// ACCESSOR ATTRIBUTES ////////////////////////////////////////
 
     /**
-     * Returns the size of the shape, in unique coordinates.
-     *
-     * @return The number of unique coordinates in the shape.
+     * The size is the number of unique coordinates in the Shape.
      */
-    override val size: Int
-        get() = points.size
+    override val size: Int get() = points.size
+
+    /////////////////////////////////////////// CONSTRUCTORS ///////////////////////////////////////////
 
     /**
      * Creates an empty shape.
@@ -49,15 +55,22 @@ class SetMutablePixelShape(
     constructor() : this(mutableSetOf())
 
     /**
-     * Creates a copy of the given shape.
+     * Creates a copy of the `other` given shape.
+     *
+     * @param other
      */
     constructor(other: PixelShape) : this() {
         add(other)
     }
 
-    init {
-        points = inputCollection.toMutableSet()
-    }
+    /**
+     * Creates a copy of the collection as a set and uses it as reference.
+     *
+     * @param collection
+     */
+    constructor(collection: Collection<Pair<Int, Int>>) : this(collection.toMutableSet())
+
+    ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
 
     override fun add(element: Pair<Int, Int>): Boolean {
         return points.add(element)
@@ -74,7 +87,7 @@ class SetMutablePixelShape(
     }
 
     override fun clear() {
-        points = mutableSetOf()
+        points.clear()
     }
 
     override fun contains(element: Pair<Int, Int>): Boolean {
