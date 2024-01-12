@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,17 @@
 
 package pixelshapes
 
+import pixelshapes.mutablepixelshapes.MutablePixelShape
+
 /**
- * Set of integer coordinates. Read-only.
+ * # PixelShape
+ *
+ * A PixelShape is a set of integer coordinates.
+ *
+ * Unless specified with the MutablePixelShape interface,
+ * an implementation is read-only.
+ *
+ * @see MutablePixelShape
  */
 interface PixelShape : Set<Pair<Int, Int>> {
 
@@ -41,7 +50,7 @@ interface PixelShape : Set<Pair<Int, Int>> {
      *
      * @return The smallest BoxPixelShape that contains all the points in the shape.
      */
-    fun getBox() : BoxPixelShape {
+    fun boundingBox(): BoxPixelShape {
         if (size == 0) {
             return BoxPixelShape(IntRange.EMPTY, IntRange.EMPTY)
         }
@@ -62,7 +71,5 @@ interface PixelShape : Set<Pair<Int, Int>> {
      *
      * @return true only if the Shape has exactly 0 unique coordinates.
      */
-    override fun isEmpty(): Boolean {
-        return size == 0
-    }
+    override fun isEmpty(): Boolean = size == 0
 }
