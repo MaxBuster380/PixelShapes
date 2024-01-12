@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,16 @@ package pixelshapes
 import java.io.Serializable
 
 /**
- * Shape with no coordinates.
+ * # EmptyPixelShape
+ *
+ * An EmptyPixelShape is a Shape with no coordinates.
  */
 class EmptyPixelShape : PixelShape, Serializable {
+
     /**
-     * Returns the size of the shape, in unique coordinates.
-     *
-     * @return The number of unique coordinates in the shape.
+     * The size is the number of unique coordinates in the Shape.
      */
-    override val size: Int
-        get() = 0
+    override val size: Int get() = 0
 
     override fun contains(element: Pair<Int, Int>): Boolean = false
 
