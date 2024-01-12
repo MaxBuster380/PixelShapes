@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ class BoxPixelShapeTest {
     fun areaMatchesNbPointsIteratedMatchesSize() {
         val shape = BoxPixelShape(41, 63)
 
-        val area = shape.getWidth() * shape.getHeight()
+        val area = shape.width * shape.height
 
         var nbPoints = 0
         for (point in shape) {
@@ -94,9 +94,9 @@ class BoxPixelShapeTest {
         val shape = BoxPixelShape(origin, width, height)
 
         assertEquals(width * height, shape.size)
-        assertEquals(width, shape.getWidth())
-        assertEquals(height, shape.getHeight())
-        assertEquals(origin, shape.getTopLeftPoint())
+        assertEquals(width, shape.width)
+        assertEquals(height, shape.height)
+        assertEquals(origin, shape.topLeftPoint)
     }
 
     @Test

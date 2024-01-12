@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,46 +29,31 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Rectangular area between two points.
+ * # BoxPixelShape
+ *
+ * A BoxPixelShape is a set of coordinates
  */
 class BoxPixelShape(
     point1: Pair<Int, Int>,
     point2: Pair<Int, Int>
 ) : PixelShape, Serializable {
-    private val topLeftPoint : Pair<Int, Int>
-    private val bottomRightPoint : Pair<Int, Int>
+
+    /////////////////////////////////////// INSTANCE ATTRIBUTES ////////////////////////////////////////
 
     /**
-     * Returns the size of the shape, in unique coordinates.
-     *
-     * @return The number of unique coordinates in the shape.
+     * The top left point is the point of the Shape with the lowest X and lowest Y.
      */
-    override val size: Int
-        get() = getWidth() * getHeight()
-
-    private class BoxPixelShapeIterator(private val shape : BoxPixelShape) : Iterator<Pair<Int, Int>> {
-        private var currentX = shape.topLeftPoint.first
-        private var currentY = shape.topLeftPoint.second
-
-        override fun hasNext(): Boolean {
-            return currentY <= shape.bottomRightPoint.second
-        }
-
-        override fun next(): Pair<Int, Int> {
-            val res = Pair(currentX, currentY)
-
-            currentX += 1
-            if (currentX > shape.bottomRightPoint.first) {
-                currentX = shape.topLeftPoint.first
-                currentY += 1
-            }
-
-            return res
-        }
-    }
+    val topLeftPoint: Pair<Int, Int>
 
     /**
-     * Top left edge will have (0,0) coordinates.
+     * The bottom right point is the point of the Shape with the highest X and highest Y.
+     */
+    val bottomRightPoint: Pair<Int, Int>
+
+    /////////////////////////////////////////// CONSTRUCTORS ///////////////////////////////////////////
+
+    /**
+     * The top left point will have the coordinates (0, 0).
      * @param width Width of the box.
      * @param height Height of the box.
      */
@@ -116,6 +101,89 @@ class BoxPixelShape(
         bottomRightPoint = Pair(max(point1.first, point2.first), max(point1.second, point2.second))
     }
 
+    /////////////////////////////////////// ACCESSOR ATTRIBUTES ////////////////////////////////////////
+
+    /**
+     * The top right point is the point of the Shape with the highest X and lowest Y.
+     */
+    val topRightPoint: Pair<Int, Int> get() = Pair(bottomRightPoint.first, topLeftPoint.second)
+
+    /**
+     * The bottom left point is the point of the Shape with the lowest X and highest Y.
+     */
+    val bottomLeftPoint: Pair<Int, Int> get() = Pair(topLeftPoint.first, bottomRightPoint.second)
+
+    /**
+     * The width is the length of the horizontal side of the Shape.
+     */
+    val width: Int get() = bottomRightPoint.first - topLeftPoint.first + 1
+
+    /**
+     * The height is the length of the vertical side of the Shape.
+     */
+    val height: Int get() = bottomRightPoint.second - topLeftPoint.second + 1
+
+    /**
+     * xLeft is the lowest X value of any point in the Shape.
+     */
+    val xLeft: Int get() = topLeftPoint.first
+
+    /**
+     * xRight is the highest X value of any point in the Shape.
+     */
+    val xRight: Int get() = bottomRightPoint.first
+
+    /**
+     * yTop is the lowest Y value of any point in the Shape.
+     */
+    val yTop: Int get() = topLeftPoint.second
+
+    /**
+     * yBottom is the highest Y value of any point in the Shape.
+     */
+    val yBottom: Int get() = bottomRightPoint.second
+
+    /**
+     * xRange is the range of X values of the Shape.
+     */
+    val xRange: IntRange get() = topLeftPoint.first..bottomRightPoint.first
+
+
+    /**
+     * yRange is the range of Y values of the Shape.
+     */
+    val yRange: IntRange get() = topLeftPoint.second..bottomRightPoint.second
+
+    /**
+     * The size is the number of unique coordinates in the Shape.
+     */
+    override val size: Int get() = width * height
+
+    ///////////////////////////////////// ITERATOR IMPLEMENTATION //////////////////////////////////////
+
+    private class BoxPixelShapeIterator(private val shape: BoxPixelShape) : Iterator<Pair<Int, Int>> {
+        private var currentX = shape.topLeftPoint.first
+        private var currentY = shape.topLeftPoint.second
+
+        override fun hasNext(): Boolean {
+            return currentY <= shape.bottomRightPoint.second
+        }
+
+        override fun next(): Pair<Int, Int> {
+            val res = Pair(currentX, currentY)
+
+            currentX += 1
+            if (currentX > shape.bottomRightPoint.first) {
+                currentX = shape.topLeftPoint.first
+                currentY += 1
+            }
+
+            return res
+        }
+    }
+
+    ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
+
     override fun contains(element: Pair<Int, Int>): Boolean {
         return element.first in topLeftPoint.first..bottomRightPoint.first &&
                 element.second in topLeftPoint.second..bottomRightPoint.second
@@ -130,63 +198,7 @@ class BoxPixelShape(
         return true
     }
 
-    override fun getBox(): BoxPixelShape {
-        return this
-    }
-
-    /**
-     * Gets the bottom-right-most point of the Shape.
-     *
-     * @return The bottom-right corner of the Shape.
-     */
-    fun getBottomRightPoint() : Pair<Int, Int> {
-        return bottomRightPoint
-    }
-
-    /**
-     * Gets the height of the box.
-     *
-     * @return The Y difference between the top-most point and the bottom-most point.
-     */
-    fun getHeight() : Int {
-        return bottomRightPoint.second - topLeftPoint.second + 1
-    }
-
-    /**
-     * Gets the top-left-most point of the Shape.
-     *
-     * @return The top-left corner of the Shape.
-     */
-    fun getTopLeftPoint(): Pair<Int, Int> {
-        return topLeftPoint
-    }
-
-    /**
-     * Gets the width of the box.
-     *
-     * @return The X difference between the left-most point and the right-most point.
-     */
-    fun getWidth(): Int {
-        return bottomRightPoint.first - topLeftPoint.first + 1
-    }
-
-    /**
-     * Gets the range of X values.
-     *
-     * @return The range of X values of the Shape.
-     */
-    fun getXRange(): IntRange {
-        return topLeftPoint.first..bottomRightPoint.first
-    }
-
-    /**
-     * Gets the range of Y values.
-     *
-     * @return The range of Y values of the Shape.
-     */
-    fun getYRange(): IntRange {
-        return topLeftPoint.second..bottomRightPoint.second
-    }
+    override fun boundingBox(): BoxPixelShape = this
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
         return BoxPixelShapeIterator(this)
