@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,23 @@ import java.io.Serializable
  * Adds a translation vector to an existing Shape.
  */
 class OffsetPixelShape(
-    private val subShape: PixelShape,
-    private val offset: Pair<Int, Int>
+
+    /**
+     * Gets the sub shape of this instance.
+     *
+     * @return This instance's reference Shape.
+     */
+    val subShape: PixelShape,
+
+    /**
+     * Gets this shape's offset vector.
+     *
+     * @return The vector by which the sub Shape is moved.
+     */
+    val offset: Pair<Int, Int>
 ) : PixelShape, Serializable {
+
+    //////////////////////////////////////// STATIC COMPONENTS /////////////////////////////////////////
 
     companion object {
         private fun add(a: Pair<Int, Int>, b: Pair<Int, Int>): Pair<Int, Int> {
@@ -41,26 +55,30 @@ class OffsetPixelShape(
         }
     }
 
+    /////////////////////////////////////// ACCESSOR ATTRIBUTES ////////////////////////////////////////
+
+    /**
+     * The size is the number of unique coordinates in the Shape.
+     */
+    override val size: Int get() = subShape.size
+
+    ///////////////////////////////////// ITERATOR IMPLEMENTATION //////////////////////////////////////
+
     private class OffsetPixelShapeIterator(private val offsetPixelShape: OffsetPixelShape) : Iterator<Pair<Int, Int>> {
 
-        private val iterator = offsetPixelShape.getSubShape().iterator()
+        private val iterator = offsetPixelShape.subShape.iterator()
 
         override fun hasNext(): Boolean {
             return iterator.hasNext()
         }
 
         override fun next(): Pair<Int, Int> {
-            return add(iterator.next(), offsetPixelShape.getOffset())
+            return add(iterator.next(), offsetPixelShape.offset)
         }
 
     }
 
-    /**
-     * Returns the size of the shape, in unique coordinates.
-     *
-     * @return The number of unique coordinates in the shape.
-     */
-    override val size: Int get() = subShape.size
+    ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
 
     override fun contains(element: Pair<Int, Int>): Boolean {
         return subShape.contains(add(element, offset))
@@ -68,24 +86,6 @@ class OffsetPixelShape(
 
     override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
         return subShape.containsAll(elements.map { add(it, offset) })
-    }
-
-    /**
-     * Gets the sub shape of this instance.
-     *
-     * @return This instance's reference Shape.
-     */
-    fun getSubShape(): PixelShape {
-        return subShape
-    }
-
-    /**
-     * Gets this shape's offset vector.
-     *
-     * @return The vector by which the sub Shape is moved.
-     */
-    fun getOffset(): Pair<Int, Int> {
-        return offset
     }
 
     override fun iterator(): Iterator<Pair<Int, Int>> {
