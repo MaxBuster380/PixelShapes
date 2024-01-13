@@ -84,9 +84,9 @@ operations. Although very good for most tasks, it requires every value to be inp
 
 ```kotlin
 val setShape = SetMutablePixelShape()
-setShape.add(Pair(0, 0))
-setShape.add(Pair(1, 0))
-setShape.add(Pair(0, -1))
+setShape += Pair(0, 0)
+setShape += Pair(1, 0)
+setShape += Pair(0, -1)
 
 println(setShape.contains(Pair(1, 0))) // true
 println(setShape.contains(Pair(1, 1))) // false
