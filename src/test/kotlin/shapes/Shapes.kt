@@ -22,9 +22,33 @@
  * SOFTWARE.
  */
 
-package pixelshapes.boxcollageshape
+package shapes
 
-internal data class Corner(
-    val coordinates: Pair<Int, Int>,
-    val direction: CornerDirection
-)
+import Point
+import pixelshapes.BoxPixelShape
+import pixelshapes.PixelShape
+import pixelshapes.mutablepixelshapes.SetMutablePixelShape
+
+fun bee(): PixelShape {
+
+    val res = SetMutablePixelShape()
+
+    res += Point(1, 0)
+
+    res += BoxPixelShape(1, 1, 8, 1)
+
+    res += BoxPixelShape(0, 2, 4, 2)
+    res += BoxPixelShape(6, 2, 4, 2)
+
+    res += BoxPixelShape(1, 4, 2, 1)
+    res += BoxPixelShape(4, 4, 2, 1)
+    res += BoxPixelShape(7, 4, 2, 1)
+
+    res += BoxPixelShape(3, 5, 4, 2)
+
+    res += BoxPixelShape(4, 7, 2, 1)
+
+    res += Point(5, 8)
+
+    return res
+}
