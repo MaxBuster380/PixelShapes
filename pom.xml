@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2023 MaxBuster
+  ~ Copyright (c) 2024 MaxBuster
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,10 @@
         <repository>
             <id>mavenCentral</id>
             <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -95,6 +99,11 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MaxBuster380</groupId>
+            <artifactId>TouchGraphs</artifactId>
+            <version>alpha-1.2.0</version>
         </dependency>
     </dependencies>
 
