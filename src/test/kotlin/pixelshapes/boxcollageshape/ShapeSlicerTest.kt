@@ -27,8 +27,10 @@ package pixelshapes.boxcollageshape
 import Point
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import pixelshapes.EmptyPixelShape
 import pixelshapes.boxcollageshape.ShapeSlicer.CornerDirection.*
 import pixelshapes.boxcollageshape.ShapeSlicer.Line
+import pixelshapes.collectionpixelshapes.UnionPixelShape
 import shapes.bee
 
 class ShapeSlicerTest {
@@ -210,5 +212,166 @@ class ShapeSlicerTest {
         )
 
 
+    }
+
+    @Test
+    fun givenAllPossibleStateForCornerGeneration_whenCheckingIfItShouldCreateASouthEastCorner_thenAllAnswersShouldBeCorrect() {
+
+        val slicer = ShapeSlicer(EmptyPixelShape())
+
+        // NorthWest, North, West, Current, isHorizontal, isMain
+        val trueAnswers = setOf(
+            listOf(false, true, false, true, true, true),
+            listOf(false, false, true, true, false, true),
+            listOf(true, true, false, true, true, true),
+            listOf(true, false, true, true, false, true),
+            listOf(true, true, true, true, true, true),
+            listOf(true, true, true, true, false, true),
+        )
+
+        val booleanValues = listOf(false, true)
+
+        for (northWest in booleanValues)
+            for (north in booleanValues)
+                for (west in booleanValues)
+                    for (current in booleanValues)
+                        for (isHorizontal in booleanValues)
+                            for (isMain in booleanValues) {
+
+                                val checkedState = listOf(northWest, north, west, current, isHorizontal, isMain)
+
+                                assertEquals(
+                                    trueAnswers.contains(checkedState),
+                                    slicer.shouldAddSouthEastOuterCorner(
+                                        northWest,
+                                        north,
+                                        west,
+                                        current,
+                                        isHorizontal,
+                                        isMain
+                                    )
+                                )
+                            }
+    }
+
+    @Test
+    fun givenAllPossibleStateForCornerGeneration_whenCheckingIfItShouldCreateASouthWestCorner_thenAllAnswersShouldBeCorrect() {
+
+        val slicer = ShapeSlicer(EmptyPixelShape())
+
+        // NorthWest, North, West, Current, isHorizontal, isMain
+        val trueAnswers = setOf(
+            listOf(false, false, true, true, false, true),
+            listOf(false, true, true, true, false, true),
+            listOf(true, false, true, false, true, false),
+            listOf(true, true, true, false, true, false),
+            listOf(true, true, true, true, false, true),
+            listOf(true, true, true, true, true, false),
+        )
+
+        val booleanValues = listOf(false, true)
+
+        for (northWest in booleanValues)
+            for (north in booleanValues)
+                for (west in booleanValues)
+                    for (current in booleanValues)
+                        for (isHorizontal in booleanValues)
+                            for (isMain in booleanValues) {
+
+                                val checkedState = listOf(northWest, north, west, current, isHorizontal, isMain)
+
+                                assertEquals(
+                                    trueAnswers.contains(checkedState),
+                                    slicer.shouldAddSouthWestOuterCorner(
+                                        northWest,
+                                        north,
+                                        west,
+                                        current,
+                                        isHorizontal,
+                                        isMain
+                                    ),
+                                    checkedState.toString()
+                                )
+                            }
+    }
+
+    @Test
+    fun givenAllPossibleStateForCornerGeneration_whenCheckingIfItShouldCreateANorthEastCorner_thenAllAnswersShouldBeCorrect() {
+
+        val slicer = ShapeSlicer(EmptyPixelShape())
+
+        // NorthWest, North, West, Current, isHorizontal, isMain
+        val trueAnswers = setOf(
+            listOf(true, true, false, false, false, false),
+            listOf(false, true, false, true, true, true),
+            listOf(true, true, true, false, false, false),
+            listOf(false, true, true, true, true, true),
+            listOf(true, true, true, true, true, true),
+            listOf(true, true, true, true, false, false),
+        )
+
+        val booleanValues = listOf(false, true)
+
+        for (northWest in booleanValues)
+            for (north in booleanValues)
+                for (west in booleanValues)
+                    for (current in booleanValues)
+                        for (isHorizontal in booleanValues)
+                            for (isMain in booleanValues) {
+
+                                val checkedState = listOf(northWest, north, west, current, isHorizontal, isMain)
+
+                                assertEquals(
+                                    trueAnswers.contains(checkedState),
+                                    slicer.shouldAddNorthEastOuterCorner(
+                                        northWest,
+                                        north,
+                                        west,
+                                        current,
+                                        isHorizontal,
+                                        isMain
+                                    ),
+                                    checkedState.toString()
+                                )
+                            }
+    }
+
+    @Test
+    fun givenTheBeeShape_whenCreatingTheTemplateCorners_thenAllOutputSetsHaveTheSameSize() {
+
+        val shape = bee()
+
+        val slicer = ShapeSlicer(shape)
+        val innerCorners = slicer.findInnerCorners()
+        val potentialGoodDiagonals = slicer.findPotentialGoodDiagonals(innerCorners)
+        val goodDiagonals = slicer.chooseGoodDiagonals(potentialGoodDiagonals)
+        slicer.removeInnerCornersOfGoodDiagonals(goodDiagonals, innerCorners)
+        val templateCorners = slicer.createCornerTemplates(goodDiagonals, innerCorners)
+
+        val expectedSize = templateCorners[SOUTHEAST]!!.size
+
+        assertEquals(expectedSize, templateCorners[SOUTHWEST]!!.size)
+        assertEquals(expectedSize, templateCorners[NORTHEAST]!!.size)
+    }
+
+    @Test
+    fun givenTheBeeShape_whenCreatingTheBoxes_thenTheCollectionOfCreatedBoxesMatchesTheOriginalShape() {
+
+        val shape = bee()
+
+        val slicer = ShapeSlicer(shape)
+        val innerCorners = slicer.findInnerCorners()
+        val potentialGoodDiagonals = slicer.findPotentialGoodDiagonals(innerCorners)
+        val goodDiagonals = slicer.chooseGoodDiagonals(potentialGoodDiagonals)
+        slicer.removeInnerCornersOfGoodDiagonals(goodDiagonals, innerCorners)
+        val templateCorners = slicer.createCornerTemplates(goodDiagonals, innerCorners)
+        val boxes = slicer.createBoxes(templateCorners)
+
+
+        assertEquals(10, boxes.size)
+        val boxesShapeCollection = UnionPixelShape(boxes)
+
+        assertTrue(shape.containsAll(boxesShapeCollection))
+        assertTrue(boxesShapeCollection.containsAll(shape))
     }
 }

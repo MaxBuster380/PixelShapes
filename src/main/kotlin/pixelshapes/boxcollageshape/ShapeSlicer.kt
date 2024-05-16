@@ -211,7 +211,11 @@ internal class ShapeSlicer(
         return res
     }
 
-    private fun traceLine(westOrigin: Point, next: (Point) -> Point, stop: (Point) -> Boolean): Line {
+    private fun traceLine(
+        westOrigin: Point,
+        next: (Point) -> Point,
+        stop: (Point) -> Boolean
+    ): Line {
 
         var cursor = westOrigin
 
@@ -222,7 +226,9 @@ internal class ShapeSlicer(
         return Line(westOrigin, cursor)
     }
 
-    internal fun findPotentialGoodDiagonals(innerCorners: HashMap<CornerDirection, MutableSet<Point>>): Set<Line> {
+    internal fun findPotentialGoodDiagonals(
+        innerCorners: HashMap<CornerDirection, MutableSet<Point>>
+    ): Set<Line> {
 
         val res = mutableSetOf<Line>()
 
@@ -247,7 +253,9 @@ internal class ShapeSlicer(
         return res
     }
 
-    private fun createNoCrossesMap(potentialGoodDiagonals: Set<Line>): HashMap<Line, Set<Line>> {
+    private fun createNoCrossesMap(
+        potentialGoodDiagonals: Set<Line>
+    ): HashMap<Line, Set<Line>> {
 
         val noCrossesMap = hashMapOf<Line, Set<Line>>()
         val potentialGoodDiagonalsList = potentialGoodDiagonals.toList()
@@ -269,7 +277,9 @@ internal class ShapeSlicer(
         return noCrossesMap
     }
 
-    internal fun chooseGoodDiagonals(potentialGoodDiagonals: Set<Line>): Set<Line> {
+    internal fun chooseGoodDiagonals(
+        potentialGoodDiagonals: Set<Line>
+    ): Set<Line> {
 
         val noCrossesMap = createNoCrossesMap(potentialGoodDiagonals)
 
@@ -432,8 +442,13 @@ internal class ShapeSlicer(
         val h = lineIsHorizontal
         val m = isMainCorner
 
-        // ~DWC~HM + DW~CH~M + NWC~HM + DNWH~M = W(~DC~HM + D~CH~M + NC~H + DNH~M)
-        return w && ((!d && c && !h && m) || (d && !c && h && !m) || (n && c && !h) || (d && n && h && !m))
+        // ~D~NWC~HM + ~DNWC~HM + D~NW~CH~M + DNW~CH~M + DNWC~HM + DNWCH~M
+        return (!d && !n && w && c && !h && m) ||
+                (!d && n && w && c && !h && m) ||
+                (d && !n && w && !c && h && !m) ||
+                ((d && n && w && !c && h && !m)) ||
+                ((d && n && w && c && !h && m)) ||
+                ((d && n && w && c && h && !m))
     }
 
     internal fun shouldAddNorthEastOuterCorner(
