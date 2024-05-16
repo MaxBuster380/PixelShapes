@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package pixelshapes.mutablepixelshapes
 
+import Point
 import pixelshapes.BoxPixelShape
 import pixelshapes.MutablePixelShapeTest
 import pixelshapes.PixelShape
@@ -87,7 +88,7 @@ class SetMutablePixelShapeTest {
             }
         }
 
-        val iteratedPoints = mutableSetOf<Pair<Int, Int>>()
+        val iteratedPoints = mutableSetOf<Point>()
         for (point in shape) {
             assertFalse(iteratedPoints.contains(point))
             iteratedPoints += point

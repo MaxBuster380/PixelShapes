@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import Point
 import pixelshapes.mutablepixelshapes.MutablePixelShape
 
 /**
@@ -36,14 +37,14 @@ import pixelshapes.mutablepixelshapes.MutablePixelShape
  *
  * @see MutablePixelShape
  */
-interface PixelShape : Set<Pair<Int, Int>> {
+interface PixelShape : Set<Point> {
 
     /**
      * Checks if the point is inside the shape.
      * @param element (X, Y) coordinates to check for.
      * @return True only if a given coordinate is a part of the shape.
      */
-    override fun contains(element: Pair<Int, Int>): Boolean
+    override fun contains(element: Point): Boolean
 
     /**
      * Gets the rectangular convex hull of the shape, meaning the smallest rectangle that contains all its points.

@@ -24,6 +24,7 @@
 
 package pixelshapes.wrapperpixelshapes
 
+import Point
 import pixelshapes.PixelShape
 import java.io.Serializable
 
@@ -44,13 +45,13 @@ class OffsetPixelShape(
      *
      * @return The vector by which the sub Shape is moved.
      */
-    val offset: Pair<Int, Int>
+    val offset: Point
 ) : PixelShape, Serializable {
 
     //////////////////////////////////////// STATIC COMPONENTS /////////////////////////////////////////
 
     companion object {
-        private fun add(a: Pair<Int, Int>, b: Pair<Int, Int>): Pair<Int, Int> {
+        private fun add(a: Point, b: Point): Point {
             return Pair(a.first + b.first, a.second + b.second)
         }
     }
@@ -64,7 +65,7 @@ class OffsetPixelShape(
 
     ///////////////////////////////////// ITERATOR IMPLEMENTATION //////////////////////////////////////
 
-    private class OffsetPixelShapeIterator(private val offsetPixelShape: OffsetPixelShape) : Iterator<Pair<Int, Int>> {
+    private class OffsetPixelShapeIterator(private val offsetPixelShape: OffsetPixelShape) : Iterator<Point> {
 
         private val iterator = offsetPixelShape.subShape.iterator()
 
@@ -72,7 +73,7 @@ class OffsetPixelShape(
             return iterator.hasNext()
         }
 
-        override fun next(): Pair<Int, Int> {
+        override fun next(): Point {
             return add(iterator.next(), offsetPixelShape.offset)
         }
 
@@ -80,15 +81,15 @@ class OffsetPixelShape(
 
     ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
+    override fun contains(element: Point): Boolean {
         return subShape.contains(add(element, offset))
     }
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun containsAll(elements: Collection<Point>): Boolean {
         return subShape.containsAll(elements.map { add(it, offset) })
     }
 
-    override fun iterator(): Iterator<Pair<Int, Int>> {
+    override fun iterator(): Iterator<Point> {
         return OffsetPixelShapeIterator(this)
     }
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package pixelshapes.collectionpixelshapes
 
+import Point
 import pixelshapes.BoxPixelShape
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -58,7 +59,7 @@ class IntersectionPixelShapeTest {
             )
         )
 
-        val points = mutableSetOf<Pair<Int, Int>>()
+        val points = mutableSetOf<Point>()
 
         for (point in shape) {
             assertTrue { box1.contains(point) && box2.contains(point) }

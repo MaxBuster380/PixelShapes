@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import Point
 import java.io.Serializable
 import kotlin.math.max
 import kotlin.math.min
@@ -34,8 +35,8 @@ import kotlin.math.min
  * A BoxPixelShape is a set of coordinates
  */
 class BoxPixelShape(
-    point1: Pair<Int, Int>,
-    point2: Pair<Int, Int>
+    point1: Point,
+    point2: Point
 ) : PixelShape, Serializable {
 
     /////////////////////////////////////// INSTANCE ATTRIBUTES ////////////////////////////////////////
@@ -43,12 +44,12 @@ class BoxPixelShape(
     /**
      * The top left point is the point of the Shape with the lowest X and lowest Y.
      */
-    val topLeftPoint: Pair<Int, Int>
+    val topLeftPoint: Point
 
     /**
      * The bottom right point is the point of the Shape with the highest X and highest Y.
      */
-    val bottomRightPoint: Pair<Int, Int>
+    val bottomRightPoint: Point
 
     /////////////////////////////////////////// CONSTRUCTORS ///////////////////////////////////////////
 
@@ -67,7 +68,7 @@ class BoxPixelShape(
      * @param width Width of the box.
      * @param height Height of the box.
      */
-    constructor(topLeftPoint: Pair<Int, Int>, width: Int, height: Int) : this(
+    constructor(topLeftPoint: Point, width: Int, height: Int) : this(
         topLeftPoint, Pair(topLeftPoint.first + width - 1, topLeftPoint.second + height - 1)
     )
 
@@ -106,12 +107,12 @@ class BoxPixelShape(
     /**
      * The top right point is the point of the Shape with the highest X and lowest Y.
      */
-    val topRightPoint: Pair<Int, Int> get() = Pair(bottomRightPoint.first, topLeftPoint.second)
+    val topRightPoint: Point get() = Pair(bottomRightPoint.first, topLeftPoint.second)
 
     /**
      * The bottom left point is the point of the Shape with the lowest X and highest Y.
      */
-    val bottomLeftPoint: Pair<Int, Int> get() = Pair(topLeftPoint.first, bottomRightPoint.second)
+    val bottomLeftPoint: Point get() = Pair(topLeftPoint.first, bottomRightPoint.second)
 
     /**
      * The width is the length of the horizontal side of the Shape.
@@ -161,7 +162,7 @@ class BoxPixelShape(
 
     ///////////////////////////////////// ITERATOR IMPLEMENTATION //////////////////////////////////////
 
-    private class BoxPixelShapeIterator(private val shape: BoxPixelShape) : Iterator<Pair<Int, Int>> {
+    private class BoxPixelShapeIterator(private val shape: BoxPixelShape) : Iterator<Point> {
         private var currentX = shape.topLeftPoint.first
         private var currentY = shape.topLeftPoint.second
 
@@ -169,7 +170,7 @@ class BoxPixelShape(
             return currentY <= shape.bottomRightPoint.second
         }
 
-        override fun next(): Pair<Int, Int> {
+        override fun next(): Point {
             val res = Pair(currentX, currentY)
 
             currentX += 1
@@ -184,12 +185,12 @@ class BoxPixelShape(
 
     ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
+    override fun contains(element: Point): Boolean {
         return element.first in topLeftPoint.first..bottomRightPoint.first &&
                 element.second in topLeftPoint.second..bottomRightPoint.second
     }
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun containsAll(elements: Collection<Point>): Boolean {
         for (point in elements) {
             if (!contains(point)) {
                 return false
@@ -200,7 +201,7 @@ class BoxPixelShape(
 
     override fun boundingBox(): BoxPixelShape = this
 
-    override fun iterator(): Iterator<Pair<Int, Int>> {
+    override fun iterator(): Iterator<Point> {
         return BoxPixelShapeIterator(this)
     }
 }

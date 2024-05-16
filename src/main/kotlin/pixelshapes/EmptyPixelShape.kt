@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import Point
 import java.io.Serializable
 
 /**
@@ -38,9 +39,9 @@ class EmptyPixelShape : PixelShape, Serializable {
      */
     override val size: Int get() = 0
 
-    override fun contains(element: Pair<Int, Int>): Boolean = false
+    override fun contains(element: Point): Boolean = false
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean = false
+    override fun containsAll(elements: Collection<Point>): Boolean = false
 
-    override fun iterator(): Iterator<Pair<Int, Int>> = listOf<Pair<Int, Int>>().iterator()
+    override fun iterator(): Iterator<Point> = listOf<Point>().iterator()
 }

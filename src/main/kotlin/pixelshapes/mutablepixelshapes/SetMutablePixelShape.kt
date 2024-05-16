@@ -24,6 +24,7 @@
 
 package pixelshapes.mutablepixelshapes
 
+import Point
 import pixelshapes.PixelShape
 import java.io.Serializable
 
@@ -37,7 +38,7 @@ import java.io.Serializable
  * @param points If given a MutableSet, it will use this instance to operate.
  */
 class SetMutablePixelShape(
-    private val points: MutableSet<Pair<Int, Int>>
+    private val points: MutableSet<Point>
 ) : MutablePixelShape, Serializable {
 
     /////////////////////////////////////// ACCESSOR ATTRIBUTES ////////////////////////////////////////
@@ -68,11 +69,11 @@ class SetMutablePixelShape(
      *
      * @param collection
      */
-    constructor(collection: Collection<Pair<Int, Int>>) : this(collection.toMutableSet())
+    constructor(collection: Collection<Point>) : this(collection.toMutableSet())
 
     ///////////////////////////////////////// INSTANCE METHODS /////////////////////////////////////////
 
-    override fun add(element: Pair<Int, Int>): Boolean {
+    override fun add(element: Point): Boolean {
         return points.add(element)
     }
 
@@ -82,7 +83,7 @@ class SetMutablePixelShape(
         }
     }
 
-    override fun addAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun addAll(elements: Collection<Point>): Boolean {
         return points.addAll(elements)
     }
 
@@ -90,19 +91,19 @@ class SetMutablePixelShape(
         points.clear()
     }
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
+    override fun contains(element: Point): Boolean {
         return element in points
     }
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun containsAll(elements: Collection<Point>): Boolean {
         return points.containsAll(elements)
     }
 
-    override fun iterator(): MutableIterator<Pair<Int, Int>> {
+    override fun iterator(): MutableIterator<Point> {
         return points.iterator()
     }
 
-    override fun remove(element: Pair<Int, Int>): Boolean {
+    override fun remove(element: Point): Boolean {
         return points.remove(element)
     }
 
@@ -112,11 +113,11 @@ class SetMutablePixelShape(
         }
     }
 
-    override fun removeAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun removeAll(elements: Collection<Point>): Boolean {
         return points.removeAll(elements.toSet())
     }
 
-    override fun retainAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun retainAll(elements: Collection<Point>): Boolean {
         return points.retainAll(elements.toSet())
     }
 }

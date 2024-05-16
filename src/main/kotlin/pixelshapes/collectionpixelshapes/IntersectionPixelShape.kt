@@ -24,6 +24,7 @@
 
 package pixelshapes.collectionpixelshapes
 
+import Point
 import pixelshapes.PixelShape
 import java.io.Serializable
 
@@ -59,7 +60,7 @@ class IntersectionPixelShape<T : PixelShape>(
         list.sortByDescending { it.size }
     }
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
+    override fun contains(element: Point): Boolean {
         for (shape in list) {
             if (!shape.contains(element)) {
                 return false
@@ -68,7 +69,7 @@ class IntersectionPixelShape<T : PixelShape>(
         return true
     }
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun containsAll(elements: Collection<Point>): Boolean {
         val points = compileSet()
 
         return points.containsAll(elements)
@@ -78,9 +79,9 @@ class IntersectionPixelShape<T : PixelShape>(
         return list.toSet()
     }
 
-    override fun iterator(): Iterator<Pair<Int, Int>> {
+    override fun iterator(): Iterator<Point> {
         if (list.isEmpty()) {
-            return listOf<Pair<Int, Int>>().iterator()
+            return listOf<Point>().iterator()
         }
 
         val points = compileSet()
@@ -92,8 +93,8 @@ class IntersectionPixelShape<T : PixelShape>(
         list -= shape
     }
 
-    private fun compileSet(): Set<Pair<Int, Int>> {
-        val res = mutableSetOf<Pair<Int, Int>>()
+    private fun compileSet(): Set<Point> {
+        val res = mutableSetOf<Point>()
         val smallestShape = list.last()
         for (point in smallestShape) {
             if (contains(point)) {

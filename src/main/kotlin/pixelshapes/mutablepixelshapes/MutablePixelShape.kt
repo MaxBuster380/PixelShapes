@@ -24,6 +24,7 @@
 
 package pixelshapes.mutablepixelshapes
 
+import Point
 import pixelshapes.PixelShape
 
 /**
@@ -31,13 +32,13 @@ import pixelshapes.PixelShape
  *
  * A MutablePixelShape is a PixelShape that can be modified at run-time.
  */
-interface MutablePixelShape : PixelShape, MutableSet<Pair<Int, Int>> {
+interface MutablePixelShape : PixelShape, MutableSet<Point> {
     /**
      * Adds a point to the Shape.
      * @param element (X, Y) coordinate to include in the Shape.
      * @return false only if the point was already included in the Shape.
      */
-    override fun add(element: Pair<Int, Int>): Boolean
+    override fun add(element: Point): Boolean
 
     /**
      * Adds all the points in a shape.
@@ -50,7 +51,7 @@ interface MutablePixelShape : PixelShape, MutableSet<Pair<Int, Int>> {
      * @param element (X, Y) coordinate to exclude from the Shape.
      * @return false only if the point was already excluded from the Shape.
      */
-    override fun remove(element: Pair<Int, Int>): Boolean
+    override fun remove(element: Point): Boolean
 
     /**
      * Removes all the points in a shape from the current shape.

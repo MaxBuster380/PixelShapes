@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import Point
 import kotlin.math.abs
 import kotlin.random.Random
 import kotlin.test.Test
@@ -50,7 +51,7 @@ class BoxPixelShapeTest {
             if (y1 >= y2) { y1 } else { y2 }
         )
 
-        val manualPointsInShape = mutableSetOf<Pair<Int, Int>>()
+        val manualPointsInShape = mutableSetOf<Point>()
         for(x in topLeftPoint.first..bottomRightPoint.first) {
             for(y in topLeftPoint.second..bottomRightPoint.second) {
                 manualPointsInShape += Pair(x, y)

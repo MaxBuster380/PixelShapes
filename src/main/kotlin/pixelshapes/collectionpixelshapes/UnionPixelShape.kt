@@ -24,6 +24,7 @@
 
 package pixelshapes.collectionpixelshapes
 
+import Point
 import pixelshapes.PixelShape
 import java.io.Serializable
 
@@ -60,7 +61,7 @@ class UnionPixelShape<T : PixelShape>(
         list.sortByDescending { it.size }
     }
 
-    override fun contains(element: Pair<Int, Int>): Boolean {
+    override fun contains(element: Point): Boolean {
         for (shape in list) {
             if (shape.contains(element)) {
                 return true
@@ -69,7 +70,7 @@ class UnionPixelShape<T : PixelShape>(
         return false
     }
 
-    override fun containsAll(elements: Collection<Pair<Int, Int>>): Boolean {
+    override fun containsAll(elements: Collection<Point>): Boolean {
         val points = compileToSet()
 
         return points.containsAll(elements)
@@ -79,7 +80,7 @@ class UnionPixelShape<T : PixelShape>(
         return list.toSet()
     }
 
-    override fun iterator(): Iterator<Pair<Int, Int>> {
+    override fun iterator(): Iterator<Point> {
         val points = compileToSet()
 
         return points.iterator()
@@ -89,8 +90,8 @@ class UnionPixelShape<T : PixelShape>(
         list -= shape
     }
 
-    private fun compileToSet(): Set<Pair<Int, Int>> {
-        val res = mutableSetOf<Pair<Int, Int>>()
+    private fun compileToSet(): Set<Point> {
+        val res = mutableSetOf<Point>()
         for (shape in list) {
             for (point in shape) {
                 res += point

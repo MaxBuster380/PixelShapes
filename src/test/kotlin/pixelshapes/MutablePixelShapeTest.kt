@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package pixelshapes
 
+import Point
 import pixelshapes.mutablepixelshapes.MutablePixelShape
 import kotlin.math.abs
 import kotlin.random.Random
@@ -49,7 +50,7 @@ class MutablePixelShapeTest {
         var res = true
 
         // Add a bunch of points to the shape
-        val points = mutableListOf<Pair<Int, Int>>()
+        val points = mutableListOf<Point>()
         for(i in 1..RANDOM_CHECKS_COUNT) {
             val new = randomPoint(xRange, yRange)
             shape.add(new)
@@ -75,7 +76,7 @@ class MutablePixelShapeTest {
 
         // Add a bunch of points to the set
         // "Status" is an external check for if the point remains in the shape.
-        val points = mutableListOf<Pair<Int, Int>>()
+        val points = mutableListOf<Point>()
         val pointStatus = mutableListOf<Boolean>()
         for(i in 1..RANDOM_CHECKS_COUNT) {
             val new = randomPoint(xRange, yRange)
@@ -112,7 +113,7 @@ class MutablePixelShapeTest {
         val NB_POINTS_REMOVED = RANDOM_CHECKS_COUNT / 2
 
         // Add a bunch of points to the set
-        val points = mutableListOf<Pair<Int, Int>>()
+        val points = mutableListOf<Point>()
         for(i in 1..RANDOM_CHECKS_COUNT) {
             val new = randomPoint(xRange, yRange)
 
@@ -150,7 +151,7 @@ class MutablePixelShapeTest {
     /**
      * Returns a new instance of a point with arbitrary coordinates within a given range.
      */
-    private fun randomPoint(xRange : IntRange, yRange : IntRange) : Pair<Int, Int> {
+    private fun randomPoint(xRange: IntRange, yRange: IntRange): Point {
         return Pair(
             randomValueInRange(xRange),
             randomValueInRange(yRange)
