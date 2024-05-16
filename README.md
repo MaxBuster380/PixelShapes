@@ -1,5 +1,7 @@
 # PixelShapes
 
+![icon.svg](icon.svg)
+
 - I - Introduction
 - II - Download
 - III - Use
