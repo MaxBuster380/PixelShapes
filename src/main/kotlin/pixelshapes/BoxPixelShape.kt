@@ -32,7 +32,7 @@ import kotlin.math.min
 /**
  * # BoxPixelShape
  *
- * A BoxPixelShape is a set of coordinates
+ * A BoxPixelShape is a set of coordinates forming a rectangle.
  */
 class BoxPixelShape(
     point1: Point,

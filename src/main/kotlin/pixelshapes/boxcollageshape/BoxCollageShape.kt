@@ -28,14 +28,29 @@ import Point
 import pixelshapes.BoxPixelShape
 import pixelshapes.PixelShape
 
+/**
+ * # BoxCollageShape
+ *
+ * A BoxCollageShape is a PixelShape that can be decomposed into a collection of BoxPixelShapes.
+ * This collection is the smallest set of BoxPixelShapes that don't overlap and add up to the original PixelShape.
+ */
 class BoxCollageShape private constructor(
     private val boxes: Set<BoxPixelShape>
 ) : PixelShape {
 
+    /**
+     * @param template PixelShape to compute from.
+     */
     constructor(template: PixelShape) : this(ShapeSlicer(template).use())
 
     override val size: Int = boxes.sumOf { it.size }
 
+    /**
+     * Gets the set of BoxPixelShapes.
+     * That set is the smallest set of BoxPixelShapes that don't overlap and add up to the original PixelShape.
+     *
+     * @return The set of BoxPixelShapes that make up the original Shape.
+     */
     fun boxes(): Set<BoxPixelShape> = boxes
 
     override fun contains(element: Point): Boolean {
