@@ -38,20 +38,50 @@ class BoxCollageShape private constructor(
 
     fun boxes(): Set<BoxPixelShape> = boxes
 
-    override fun boundingBox(): BoxPixelShape {
-        TODO("Not yet implemented")
-    }
-
     override fun contains(element: Point): Boolean {
-        TODO("Not yet implemented")
+        for (box in boxes)
+            if (box.contains(element))
+                return true
+
+        return false
     }
 
     override fun containsAll(elements: Collection<Point>): Boolean {
-        TODO("Not yet implemented")
+        for (element in elements)
+            if (!contains(element))
+                return false
+
+        return true
     }
 
     override fun iterator(): Iterator<Point> {
-        TODO("Not yet implemented")
+
+        if (boxes.isEmpty()) return listOf<Point>().iterator()
+
+        return object : Iterator<Point> {
+
+            private val boxesList = boxes.toList()
+            private var currentBoxIndex = 0
+            private var currentBoxIterator = boxesList.first().iterator()
+
+            override fun hasNext(): Boolean {
+
+                val isFinished = !currentBoxIterator.hasNext() && currentBoxIndex != boxesList.lastIndex
+
+                return !isFinished
+            }
+
+            override fun next(): Point {
+
+                if (!currentBoxIterator.hasNext()) {
+
+                    currentBoxIndex += 1
+                    currentBoxIterator = boxesList[currentBoxIndex].iterator()
+                }
+
+                return currentBoxIterator.next()
+            }
+        }
     }
 
 }
