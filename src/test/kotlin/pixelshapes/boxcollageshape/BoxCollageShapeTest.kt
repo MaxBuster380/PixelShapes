@@ -78,19 +78,19 @@ class BoxCollageShapeTest {
     @Test
     fun given100RandomShapes_whenCreatingABoxCollageShapeForEach_thenAllMatchTheOriginal() {
 
-        val logger = CollageSvgLogger()
+        // val logger = CollageSvgLogger()
 
         for (i in 1..100) {
 
-            logger.reset()
+            // logger.reset()
 
             val originalShape = createRandomShape()
 
-            val collageShape = BoxCollageShape(originalShape, logger)
+            val collageShape = BoxCollageShape(originalShape) // logger
 
             assertTrue(
                 resultIdValid(originalShape, collageShape),
-                "See logger.svg ${logger.build()}"
+                /*"See logger.svg ${logger.build()}"*/
             )
         }
     }

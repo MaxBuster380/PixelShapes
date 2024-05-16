@@ -32,10 +32,8 @@ import pixelshapes.mutablepixelshapes.MutablePixelShape
 import pixelshapes.mutablepixelshapes.SetMutablePixelShape
 
 internal class ShapeSlicer(
-    private val shape: PixelShape,
-    private val logger: CollageSvgLogger = CollageSvgLogger()
+    private val shape: PixelShape
 ) {
-
 
     private val boundingBox = shape.boundingBox()
 
@@ -160,8 +158,8 @@ internal class ShapeSlicer(
     }
 
     init {
-        for (point in shape)
-            logger.addSquare(point)
+        // for (point in shape)
+        //     logger.addSquare(point)
     }
 
     fun use(): Set<BoxPixelShape> {
@@ -171,27 +169,27 @@ internal class ShapeSlicer(
         val innerCorners = findInnerCorners()
 
         val potentialGoodDiagonals = findPotentialGoodDiagonals(innerCorners)
-        for (diagonal in potentialGoodDiagonals)
-            logger.addPotentialGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
+        // for (diagonal in potentialGoodDiagonals)
+        //     logger.addPotentialGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
 
         val goodDiagonals = chooseGoodDiagonals(potentialGoodDiagonals)
-        for (diagonal in goodDiagonals)
-            logger.addGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
+        // for (diagonal in goodDiagonals)
+        //     logger.addGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
 
         removeInnerCornersOfGoodDiagonals(goodDiagonals, innerCorners)
 
         val templateCorners = createCornerTemplates(goodDiagonals, innerCorners)
-        for (point in templateCorners[CornerDirection.SOUTHEAST]!!)
-            logger.addSouthEastCorner(point)
-        for (point in templateCorners[CornerDirection.SOUTHWEST]!!)
-            logger.addSouthWestCorner(point)
-        for (point in templateCorners[CornerDirection.NORTHEAST]!!)
-            logger.addNorthEastCorner(point)
+        // for (point in templateCorners[CornerDirection.SOUTHEAST]!!)
+        //     logger.addSouthEastCorner(point)
+        // for (point in templateCorners[CornerDirection.SOUTHWEST]!!)
+        //     logger.addSouthWestCorner(point)
+        // for (point in templateCorners[CornerDirection.NORTHEAST]!!)
+        //     logger.addNorthEastCorner(point)
 
         val res = createBoxes(templateCorners)
 
-        for (box in res)
-            logger.addBox(box)
+        // for (box in res)
+        //     logger.addBox(box)
 
         return res
     }
@@ -281,24 +279,16 @@ internal class ShapeSlicer(
         potentialGoodDiagonals: Set<Line>
     ): HashMap<Line, Set<Line>> {
 
-        val noCrossesMap = hashMapOf<Line, Set<Line>>()
-        val potentialGoodDiagonalsList = potentialGoodDiagonals.toList()
+        val res = hashMapOf<Line, Set<Line>>()
 
-        for (mainIndex in potentialGoodDiagonalsList.indices) {
-            val mainLine = potentialGoodDiagonalsList[mainIndex]
+        for (line in potentialGoodDiagonals) {
 
-            val noCrossesOfMainLine = mutableSetOf<Line>()
-            for (secondIndex in (mainIndex + 1)..potentialGoodDiagonalsList.lastIndex) {
-                val secondLine = potentialGoodDiagonalsList[secondIndex]
-
-                if (!mainLine.touches(secondLine)) {
-                    noCrossesOfMainLine += secondLine
-                }
-            }
-            noCrossesMap[mainLine] = noCrossesOfMainLine
+            res[line] = potentialGoodDiagonals.filter {
+                line != it && !line.touches(it)
+            }.toSet()
         }
 
-        return noCrossesMap
+        return res
     }
 
     internal fun chooseGoodDiagonals(
@@ -566,8 +556,8 @@ internal class ShapeSlicer(
 
         val leftoverInnerCornerLines = traceLinesFromInnerCorners(innerCorners, goodDiagonals)
 
-        for (line in leftoverInnerCornerLines)
-            logger.addLeftoverLine(line.mainCorner, line.secondCorner)
+        // for (line in leftoverInnerCornerLines)
+        //     logger.addLeftoverLine(line.mainCorner, line.secondCorner)
 
         for (line in leftoverInnerCornerLines)
             addLine(line, res)

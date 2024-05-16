@@ -38,3 +38,5 @@ build/
 .DS_Store
 
 logger.svg
+
+src/main/kotlin/pixelshapes/boxcollageshape/CollageSvgLogger.kt

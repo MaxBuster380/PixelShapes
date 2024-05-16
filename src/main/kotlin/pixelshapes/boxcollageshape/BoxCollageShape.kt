@@ -34,8 +34,6 @@ class BoxCollageShape private constructor(
 
     constructor(template: PixelShape) : this(ShapeSlicer(template).use())
 
-    constructor(template: PixelShape, logger: CollageSvgLogger) : this(ShapeSlicer(template, logger).use())
-
     override val size: Int = boxes.sumOf { it.size }
 
     fun boxes(): Set<BoxPixelShape> = boxes
