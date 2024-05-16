@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 MaxBuster
+ * Copyright (c) 2024 MaxBuster
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,10 @@ import pixelshapes.PixelShape
 /**
  * Tool to draw any shape in the terminal as a string.
  */
-class PixelShapePrinter {
+class PixelShapePrinter(
+    private val insideString: String = "[]",
+    private val outsideString: String = "_ ",
+) {
     /**
      * Writes the Shape as a string that can be displayed on screen for easy view.
      * @param shape Shape to display
@@ -42,9 +45,9 @@ class PixelShapePrinter {
             for (x in xRange) {
                 val point = Pair(x, y)
                 res += if (shape.contains(point)) {
-                    "[]"
+                    insideString
                 } else {
-                    "_ "
+                    outsideString
                 }
             }
             res += "\n"

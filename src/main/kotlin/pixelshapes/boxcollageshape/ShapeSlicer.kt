@@ -32,8 +32,10 @@ import pixelshapes.mutablepixelshapes.MutablePixelShape
 import pixelshapes.mutablepixelshapes.SetMutablePixelShape
 
 internal class ShapeSlicer(
-    private val shape: PixelShape
+    private val shape: PixelShape,
+    private val logger: CollageSvgLogger = CollageSvgLogger()
 ) {
+
 
     private val boundingBox = shape.boundingBox()
 
@@ -72,7 +74,7 @@ internal class ShapeSlicer(
 
         init {
             if (mainCorner == secondCorner)
-                throw Exception("Corners cannot overlap.")
+                throw Exception("Corners cannot overlap. Overlap on $mainCorner")
         }
 
         fun length(): Int {
@@ -157,19 +159,41 @@ internal class ShapeSlicer(
         }
     }
 
+    init {
+        for (point in shape)
+            logger.addSquare(point)
+    }
+
     fun use(): Set<BoxPixelShape> {
+
+        if (shape.isEmpty()) return setOf()
 
         val innerCorners = findInnerCorners()
 
         val potentialGoodDiagonals = findPotentialGoodDiagonals(innerCorners)
+        for (diagonal in potentialGoodDiagonals)
+            logger.addPotentialGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
 
         val goodDiagonals = chooseGoodDiagonals(potentialGoodDiagonals)
+        for (diagonal in goodDiagonals)
+            logger.addGoodDiagonal(diagonal.mainCorner, diagonal.secondCorner)
 
         removeInnerCornersOfGoodDiagonals(goodDiagonals, innerCorners)
 
         val templateCorners = createCornerTemplates(goodDiagonals, innerCorners)
+        for (point in templateCorners[CornerDirection.SOUTHEAST]!!)
+            logger.addSouthEastCorner(point)
+        for (point in templateCorners[CornerDirection.SOUTHWEST]!!)
+            logger.addSouthWestCorner(point)
+        for (point in templateCorners[CornerDirection.NORTHEAST]!!)
+            logger.addNorthEastCorner(point)
 
-        return createBoxes(templateCorners)
+        val res = createBoxes(templateCorners)
+
+        for (box in res)
+            logger.addBox(box)
+
+        return res
     }
 
     internal fun findInnerCorners(): HashMap<CornerDirection, MutableSet<Point>> {
@@ -304,7 +328,7 @@ internal class ShapeSlicer(
 
         for (line in goodDiagonals) {
 
-            for (direction in innerCorners.keys) {
+            for (direction in CornerDirection.entries) {
 
                 innerCorners[direction]!!.remove(line.mainCorner)
                 innerCorners[direction]!!.remove(line.secondCorner)
@@ -365,6 +389,13 @@ internal class ShapeSlicer(
 
         res += widerBoundingBox
         res -= shape
+
+        for (current in shape) {
+
+            val tally = NeighborTally(shape, current)
+
+            if (!tally.hasNorth || !tally.hasWest) res += current
+        }
 
         return res
     }
@@ -536,12 +567,46 @@ internal class ShapeSlicer(
         val leftoverInnerCornerLines = traceLinesFromInnerCorners(innerCorners, goodDiagonals)
 
         for (line in leftoverInnerCornerLines)
+            logger.addLeftoverLine(line.mainCorner, line.secondCorner)
+
+        for (line in leftoverInnerCornerLines)
             addLine(line, res)
+
+        addLineMeetupCorners(leftoverInnerCornerLines, goodDiagonals, res)
 
         return res
     }
 
-    internal fun createBoxes(templateCorners: HashMap<CornerDirection, MutableSet<Point>>): Set<BoxPixelShape> {
+    private fun addLineMeetupCorners(
+        leftoverInnerCornerLines: Set<Line>,
+        goodDiagonals: Set<Line>,
+        res: HashMap<CornerDirection, MutableSet<Pair<Int, Int>>>
+    ) {
+        val goodDiagonalCorners = mutableSetOf<Point>()
+        for (diagonal in goodDiagonals) {
+
+            goodDiagonalCorners += diagonal.mainCorner
+            goodDiagonalCorners += diagonal.secondCorner
+        }
+
+        for (line in leftoverInnerCornerLines) {
+
+            if (goodDiagonalCorners.contains(line.mainCorner) && line.isVertical()) {
+
+                res[CornerDirection.SOUTHEAST]!! += line.mainCorner
+                res[CornerDirection.SOUTHWEST]!! += line.mainCorner
+            }
+
+            if (goodDiagonalCorners.contains(line.secondCorner) && line.isVertical()) {
+
+                res[CornerDirection.NORTHEAST]!! += line.secondCorner
+            }
+        }
+    }
+
+    internal fun createBoxes(
+        templateCorners: HashMap<CornerDirection, MutableSet<Point>>
+    ): Set<BoxPixelShape> {
 
         val res = mutableSetOf<BoxPixelShape>()
 
@@ -551,10 +616,17 @@ internal class ShapeSlicer(
 
         for (southEastPoint in southEastCorners) {
 
-            val horizontalLine =
-                traceLine(southEastPoint, { Point(it.first + 1, it.second) }, { southWestCorners.contains(it) })
-            val verticalLine =
-                traceLine(southEastPoint, { Point(it.first, it.second + 1) }, { northEastCorners.contains(it) })
+            val horizontalLine = traceLine(
+                southEastPoint,
+                { Point(it.first + 1, it.second) },
+                { southWestCorners.contains(it) }
+            )
+
+            val verticalLine = traceLine(
+                southEastPoint,
+                { Point(it.first, it.second + 1) },
+                { northEastCorners.contains(it) }
+            )
 
             res += BoxPixelShape(southEastPoint, horizontalLine.length(), verticalLine.length())
         }

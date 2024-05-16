@@ -32,6 +32,7 @@ import pixelshapes.boxcollageshape.ShapeSlicer.CornerDirection.*
 import pixelshapes.boxcollageshape.ShapeSlicer.Line
 import pixelshapes.collectionpixelshapes.UnionPixelShape
 import shapes.bee
+import shapes.file
 
 class ShapeSlicerTest {
 
@@ -210,8 +211,6 @@ class ShapeSlicerTest {
             ),
             outerCorners[NORTHEAST]!!
         )
-
-
     }
 
     @Test
@@ -373,5 +372,42 @@ class ShapeSlicerTest {
 
         assertTrue(shape.containsAll(boxesShapeCollection))
         assertTrue(boxesShapeCollection.containsAll(shape))
+    }
+
+    @Test
+    fun givenTheFileShape_whenFindingInnerCorners_thenFindsTheExpectedCorners() {
+
+        val shape = file()
+
+        val slicer = ShapeSlicer(shape)
+
+        val innerCorners = slicer.findInnerCorners()
+
+        assertTrue(innerCorners[SOUTHEAST]!!.isEmpty())
+        assertTrue(innerCorners[NORTHEAST]!!.isEmpty())
+        assertTrue(innerCorners[SOUTHWEST]!!.isEmpty())
+
+        assertEquals(
+            setOf(Point(2, 3)),
+            innerCorners[NORTHWEST]!!
+        )
+    }
+
+    @Test
+    fun givenTheFileShape_whenCreatingTheTemplateCorners_thenAllOutputSetsHaveTheSameSize() {
+
+        val shape = file()
+
+        val slicer = ShapeSlicer(shape)
+        val innerCorners = slicer.findInnerCorners()
+        val potentialGoodDiagonals = slicer.findPotentialGoodDiagonals(innerCorners)
+        val goodDiagonals = slicer.chooseGoodDiagonals(potentialGoodDiagonals)
+        slicer.removeInnerCornersOfGoodDiagonals(goodDiagonals, innerCorners)
+        val templateCorners = slicer.createCornerTemplates(goodDiagonals, innerCorners)
+
+        val expectedSize = templateCorners[SOUTHEAST]!!.size
+
+        assertEquals(expectedSize, templateCorners[SOUTHWEST]!!.size)
+        assertEquals(expectedSize, templateCorners[NORTHEAST]!!.size)
     }
 }

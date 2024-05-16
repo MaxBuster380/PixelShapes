@@ -52,3 +52,10 @@ fun bee(): PixelShape {
 
     return res
 }
+
+fun file(): PixelShape {
+    val res = SetMutablePixelShape()
+    res += BoxPixelShape(2, 4)
+    res += BoxPixelShape(3, 3)
+    return res
+}
