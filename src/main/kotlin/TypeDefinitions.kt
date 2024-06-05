@@ -23,3 +23,20 @@
  */
 
 typealias Point = Pair<Int, Int>
+
+val Point.x: Int get() = this.first
+val Point.y: Int get() = this.second
+
+operator fun Point.plus(other: Point): Point {
+    return Point(
+        this.x + other.x,
+        this.y + other.y,
+    )
+}
+
+operator fun Point.minus(other: Point): Point {
+    return Point(
+        this.x - other.x,
+        this.y - other.y,
+    )
+}

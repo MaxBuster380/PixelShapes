@@ -81,7 +81,7 @@ class BoxCollageShape private constructor(
 
             override fun hasNext(): Boolean {
 
-                val isFinished = !currentBoxIterator.hasNext() && currentBoxIndex != boxesList.lastIndex
+                val isFinished = !currentBoxIterator.hasNext() && currentBoxIndex == boxesList.lastIndex
 
                 return !isFinished
             }
